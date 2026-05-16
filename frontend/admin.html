@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scrollix Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f9;--bg-alt:#f8f9fa;--sidebar:#ffffff;--card:#ffffff;--input-bg:#ffffff;--border:#e2e8f0;--accent:#ff6b2c;--accent2:#ff9466;--green:#1bcfb4;--blue:#198ae3;--pink:#fe7096;--text:#1e293b;--muted:#64748b;--white:#ffffff;}
+[data-theme="dark"]{--bg:#0f172a;--bg-alt:#1e293b;--sidebar:#1e293b;--card:#1e293b;--input-bg:#0f172a;--border:#334155;--text:#f8fafc;--muted:#94a3b8;--white:#1e293b;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system, BlinkMacSystemFont, 'Inter', sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.login-page{display:flex;align-items:center;justify-content:center;min-height:100vh}
+.login-box{background:var(--card);border:1px solid var(--border);padding:2.5rem;width:100%;max-width:400px;border-radius:12px}
+.login-logo{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:800;font-size:2rem;text-align:center;margin-bottom:2rem}
+.login-logo span{color:var(--accent)}
+.admin-layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.sidebar{background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-logo{padding:1.5rem;border-bottom:1px solid var(--border)}
+.sidebar-logo a{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:800;font-size:1.5rem;color:var(--text);text-decoration:none}
+.sidebar-logo a span{color:var(--accent)}
+.sidebar-logo small{display:block;font-size:10px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-top:2px}
+.nav-section{padding:.75rem 0}
+.nav-label{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.5rem 1.5rem}
+.nav-item{display:flex;align-items:center;gap:10px;padding:.65rem 1.5rem;color:var(--muted);cursor:pointer;transition:all .2s;font-size:13px;font-weight:500;border-left:3px solid transparent}
+.nav-item:hover{background:var(--bg-alt);color:var(--accent)}
+.nav-item.active{background:rgba(255,107,44,0.1);color:var(--accent);border-left-color:var(--accent)}
+.sidebar-bottom{margin-top:auto;padding:1rem 1.5rem;border-top:1px solid var(--border)}
+.admin-badge{background:rgba(230,51,41,.15);color:var(--accent);font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:.75rem}
+.btn-logout{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px;font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s}
+.btn-logout:hover{background:rgba(239,68,68,.1);border-color:#ef4444;color:#ef4444}
+.main-content{overflow-x:hidden}
+.topbar{background:var(--card);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:700;font-size:1.1rem}
+.topbar-actions{display:flex;gap:8px}
+.content-area{padding:2rem}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:none;cursor:pointer;font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:6px;transition:all .2s;text-decoration:none}
+.btn-primary{background:var(--accent);color:white}.btn-primary:hover{background:#e55217}
+.btn-success{background:var(--green);color:white}.btn-success:hover{background:#16a34a}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}.btn-ghost:hover{background:var(--border);color:var(--text)}
+.btn-danger{background:#ef4444;color:white}.btn-danger:hover{background:#dc2626}
+.btn-full{width:100%;justify-content:center}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:2rem}
+.stat-card{background:var(--card);border:none;box-shadow:0 4px 15px rgba(0,0,0,0.05);padding:1.5rem;border-radius:12px;position:relative;overflow:hidden;color:white}
+.stat-card::before{display:none}
+.stat-card.red{background:linear-gradient(to right, var(--pink), var(--accent2))} .stat-card.blue{background:linear-gradient(to right, var(--blue), #3fc0f0)} .stat-card.green{background:linear-gradient(to right, var(--green), #46e8c7)} .stat-card.orange{background:linear-gradient(to right, var(--accent), #ffab76)}
+.stat-icon{font-size:1.8rem;margin-bottom:.6rem}
+.stat-value{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:2rem;font-weight:800;color:white;line-height:1}
+.stat-label{font-size:12px;color:rgba(255,255,255,0.8);margin-top:4px;font-family:-apple-system, BlinkMacSystemFont, 'Inter', sans-serif;text-transform:uppercase;letter-spacing:.02em;font-weight:600}
+/* CHARTS */
+.charts-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.25rem;margin-bottom:2rem}
+.chart-card{background:var(--card);border:none;box-shadow:0 4px 15px rgba(0,0,0,0.05);border-radius:12px;padding:1.5rem}
+.chart-title{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.25rem;color:var(--muted)}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:100px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
+.bar{width:100%;background:var(--accent);border-radius:3px 3px 0 0;transition:height .5s ease;min-height:2px}
+.bar-label{font-size:10px;color:var(--muted);font-family:'Anton', sans-serif; letter-spacing: 0.03em}
+.donut-wrap{display:flex;flex-direction:column;gap:10px}
+.donut-item{display:flex;align-items:center;gap:8px;font-size:13px}
+.donut-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.donut-count{color:var(--muted);font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:11px;font-weight:600;margin-left:auto}
+/* TABLES */
+.table-card{background:var(--card);border:none;box-shadow:0 4px 15px rgba(0,0,0,0.05);border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
+.table-header{padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.table-title{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.table-filters{display:flex;gap:8px;flex-wrap:wrap;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--card)}
+.fi{background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:7px 12px;font-family:-apple-system, BlinkMacSystemFont, 'Inter', sans-serif;font-size:13px;border-radius:6px;outline:none}
+.fi:focus{border-color:var(--accent)}
+table{width:100%;border-collapse:collapse}
+thead{background:var(--bg-alt)}
+th{padding:.7rem 1.25rem;text-align:left;font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td{padding:.8rem 1.25rem;border-top:1px solid var(--border);font-size:13px;vertical-align:middle}
+tr:hover td{background:var(--bg-alt)}
+.badge{display:inline-block;font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:4px}
+.badge-active{background:rgba(34,197,94,.15);color:var(--green)}
+.badge-draft{background:rgba(100,116,139,.15);color:var(--muted)}
+.badge-yes{background:rgba(59,130,246,.15);color:var(--blue)}
+.badge-no{background:rgba(100,116,139,.1);color:var(--muted)}
+.post-thumb{width:48px;height:36px;object-fit:cover;border-radius:4px;background:#2a3347}
+.truncate{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.actions-cell{display:flex;gap:6px}
+.icon-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 8px;border-radius:4px;cursor:pointer;font-size:13px;transition:all .2s}
+.icon-btn:hover{background:var(--border);color:var(--text)}
+.icon-btn.danger:hover{background:rgba(239,68,68,.15);border-color:#ef4444;color:#ef4444}
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+/* FORM */
+.form-group{margin-bottom:1.2rem}
+.form-group label{display:block;font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.form-control{width:100%;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:10px 14px;font-family:-apple-system, BlinkMacSystemFont, 'Inter', sans-serif;font-size:14px;border-radius:6px;outline:none;transition:border .2s}
+.form-control:focus{border-color:var(--accent)}
+textarea.form-control{resize:vertical;min-height:90px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.char-count{font-size:11px;color:var(--muted);text-align:right;margin-top:3px}
+.form-hint{font-size:11px;color:var(--muted);margin-top:4px}
+/* RICH EDITOR */
+.rich-editor{background:var(--input-bg);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.editor-toolbar{display:flex;gap:4px;padding:8px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:var(--bg-alt)}
+.tb{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:12px;font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:600;transition:all .2s}
+.tb:hover{background:var(--border);color:var(--text)}
+.editor-content{padding:14px;min-height:220px;outline:none;color:var(--text);font-size:14px;line-height:1.75;caret-color:var(--accent)}
+/* TOGGLES */
+.toggle-row{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.toggle-item{display:flex;align-items:center;gap:8px;cursor:pointer}
+.toggle{width:38px;height:22px;background:var(--border);border-radius:11px;position:relative;transition:background .2s;flex-shrink:0}
+.toggle.on{background:var(--green)}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;background:white;border-radius:50%;top:2px;left:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.toggle.on::after{left:18px}
+.toggle-label{font-size:13px;font-weight:500}
+/* IMAGE PREVIEW */
+.img-preview{width:100%;height:130px;object-fit:cover;border-radius:6px;margin-top:8px;display:none;background:#2a3347}
+/* AFFILIATE SECTION */
+.aff-builder{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin-top:.5rem}
+.aff-builder-title{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.aff-item{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem;margin-bottom:.75rem;position:relative}
+.aff-item-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+.aff-item-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+.aff-remove{position:absolute;top:.75rem;right:.75rem;background:transparent;border:1px solid var(--border);color:var(--muted);padding:3px 7px;border-radius:4px;cursor:pointer;font-size:12px;transition:all .2s}
+.aff-remove:hover{background:rgba(239,68,68,.15);color:#ef4444;border-color:#ef4444}
+.btn-add-aff{background:transparent;border:1px dashed var(--border);color:var(--muted);width:100%;padding:10px;border-radius:6px;cursor:pointer;font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:12px;font-weight:600;transition:all .2s;margin-top:.5rem}
+.btn-add-aff:hover{border-color:var(--accent);color:var(--accent)}
+/* YT PREVIEW */
+.yt-preview{margin-top:8px;border-radius:6px;overflow:hidden;display:none}
+.yt-preview iframe{width:100%;height:160px;border:0}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:2rem}
+.modal{background:var(--card);border:1px solid var(--border);width:100%;max-width:440px;border-radius:12px;overflow:hidden}
+.modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:700;font-size:1rem}
+.modal-close{background:transparent;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;line-height:1}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:1.5rem}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+/* TOP POSTS */
+.top-post-item{display:flex;align-items:center;gap:10px;padding:8px;background:var(--bg-alt);border-radius:6px;margin-bottom:6px}
+.top-rank{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:800;font-size:.9rem;color:var(--accent);width:22px;text-align:center}
+.top-info{flex:1;min-width:0}
+.top-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.top-views{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:12px;font-weight:700;color:var(--accent2)}
+/* MISC */
+.section-divider{border:none;border-top:1px solid var(--border);margin:1.5rem 0}
+.section-label{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--green);color:white;padding:.75rem 1.25rem;border-radius:8px;font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:12px;font-weight:700;z-index:999;transform:translateY(100px);transition:transform .3s}
+.toast.show{transform:translateY(0)}.toast.err{background:var(--accent)}
+.error-msg{color:var(--accent);font-size:13px;margin-top:8px;display:none}
+.pos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:.5rem}
+.pos-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s}
+.pos-item:hover{border-color:var(--accent);background:rgba(230,51,41,.05)}
+.pos-item.selected{border-color:var(--accent);background:rgba(230,51,41,.12)}
+.pos-icon{font-size:1.5rem;margin-bottom:.4rem}
+.pos-label{font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text);margin-bottom:.3rem}
+.pos-desc{font-size:11px;color:var(--muted);line-height:1.4}
+.hidden{display:none!important}
+</style>
+  <script src="/js/config.js"></script>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-page" id="login-page">
+  <div class="login-box">
+    <div class="login-logo">Scroll<span>ix</span><br><small style="font-size:11px;color:var(--muted);letter-spacing:.1em">ADMIN PANEL</small></div>
+    <div class="form-group"><label>Username</label><input type="text" class="form-control" id="login-user" placeholder="admin" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="form-group"><label>Password</label><input type="password" class="form-control" id="login-pass" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="error-msg" id="login-err">Invalid username or password</div>
+    <button class="btn btn-primary btn-full" style="margin-top:1rem" onclick="doLogin()">Login</button>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div class="admin-layout hidden" id="admin-app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/">Scroll<span>ix</span></a>
+      <small>Admin Panel</small>
+    </div>
+    <nav>
+      <div class="nav-section">
+        <div class="nav-label">Overview</div>
+        <div class="nav-item active" onclick="go('dashboard')">ðŸ“Š Dashboard</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Content</div>
+        <div class="nav-item" onclick="go('posts')">ðŸ“ All Posts</div>
+        <div class="nav-item" onclick="go('new-post')">âœï¸ New Post</div>
+        <div class="nav-item" onclick="go('categories')">ðŸ·ï¸ Categories</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Site</div>
+        <div class="nav-item" onclick="window.open('/')">ðŸŒ View Site</div>
+        <div class="nav-item" onclick="go('settings')">âš™ï¸ Settings</div>
+      </div>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="admin-badge" id="admin-name">Admin</div>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode" style="font-size:16px;">ðŸŒ™</button>
+        <div class="topbar-actions" id="topbar-actions"></div>
+      </div>
+    </div>
+    <div class="content-area" id="content-area"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// â”€â”€ THEME â”€â”€
+function initTheme() {
+  if (localStorage.getItem('sx_theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    const btn = document.getElementById('theme-toggle');
+    if(btn) btn.textContent = 'â˜€ï¸';
+  }
+}
+initTheme();
+function toggleTheme() {
+  const isDark = document.documentElement.hasAttribute('data-theme');
+  const btn = document.getElementById('theme-toggle');
+  if (isDark) {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('sx_theme', 'light');
+    if(btn) btn.textContent = 'ðŸŒ™';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('sx_theme', 'dark');
+    if(btn) btn.textContent = 'â˜€ï¸';
+  }
+}
+
+let TOKEN = localStorage.getItem('sx_token');
+let editPost = null, editCat = null, cats = [];
+
+// â”€â”€ AUTH â”€â”€
+async function doLogin(){
+  const u=document.getElementById('login-user').value.trim();
+  const p=document.getElementById('login-pass').value.trim();
+  if(!u||!p) return;
+  try{
+    const r=await fetch(API_BASE_URL + '/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.error);
+    TOKEN=d.token; localStorage.setItem('sx_token',TOKEN);
+    document.getElementById('admin-name').textContent=d.username;
+    document.getElementById('login-page').classList.add('hidden');
+    document.getElementById('admin-app').classList.remove('hidden');
+    go('dashboard');
+  }catch(e){ const el=document.getElementById('login-err'); el.style.display='block'; el.textContent=e.message||'Login failed'; }
+}
+function logout(){ localStorage.removeItem('sx_token'); TOKEN=null; document.getElementById('admin-app').classList.add('hidden'); document.getElementById('login-page').classList.remove('hidden'); }
+function H(){ return {'Authorization':'Bearer '+TOKEN,'Content-Type':'application/json'}; }
+
+// â”€â”€ TOAST â”€â”€
+function toast(msg,type='ok'){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast '+(type==='err'?'err':'')+' show'; setTimeout(()=>t.classList.remove('show'),3000); }
+
+// â”€â”€ NAV â”€â”€
+function go(page){
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+  const map={'dashboard':0,'posts':1,'new-post':2,'categories':3,'settings':5};
+  document.querySelectorAll('.nav-item')[map[page]||0]?.classList.add('active');
+  const titles={'dashboard':'Dashboard','posts':'All Posts','new-post':'New Post','categories':'Categories','settings':'Settings'};
+  document.getElementById('topbar-title').textContent=titles[page]||'';
+  const acts={'posts':'<button class="btn btn-primary" onclick="go(\'new-post\')">+ New Post</button>',
+              'categories':'<button class="btn btn-success" onclick="openCatModal()">+ Category</button>',
+              'dashboard':'<button class="btn btn-ghost" onclick="loadDash()">â†» Refresh</button>'};
+  document.getElementById('topbar-actions').innerHTML=acts[page]||'';
+  ({dashboard:renderDash,posts:renderPosts,'new-post':()=>renderEditor(null),categories:renderCats,settings:renderSettings})[page]?.();
+}
+
+// â”€â”€ DASHBOARD â”€â”€
+function renderDash(){
+  document.getElementById('content-area').innerHTML=`
+    <div class="stats-grid" id="stats-grid"><div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted)">Loading...</div></div>
+    <div class="charts-grid">
+      <div class="chart-card"><div class="chart-title">Views â€” Last 7 Days</div><div class="bar-chart" id="views-chart" style="align-items:center;justify-content:center"><span style="color:var(--muted);font-size:13px">Loading...</span></div></div>
+      <div class="chart-card"><div class="chart-title">Posts by Category</div><div class="donut-wrap" id="cat-chart"></div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+      <div class="table-card"><div class="table-header"><span class="table-title">Top Posts by Views</span></div><div style="padding:1rem" id="top-posts"></div></div>
+      <div class="table-card"><div class="table-header"><span class="table-title">Recent Posts</span></div>
+        <table><thead><tr><th>Title</th><th>Status</th><th>Date</th></tr></thead><tbody id="recent-tb"></tbody></table>
+      </div>
+    </div>`;
+  loadDash();
+}
+
+const COLS=['#e63329','#f5a623','#22c55e','#3b82f6','#a855f7','#ec4899'];
+async function loadDash(){
+  try{
+    const r=await fetch(API_BASE_URL + '/api/analytics/dashboard',{headers:H()});
+    const d=await r.json();
+    const {stats,weeklyViews,topPosts,recentPosts,categoryBreakdown}=d;
+    const defs=[{k:'totalPosts',l:'Total Posts',c:'red',i:'ðŸ“'},{k:'publishedPosts',l:'Published',c:'green',i:'âœ…'},
+                {k:'draftPosts',l:'Drafts',c:'blue',i:'ðŸ“‹'},{k:'totalCategories',l:'Categories',c:'orange',i:'ðŸ·ï¸'},
+                {k:'totalViews',l:'Total Views',c:'red',i:'ðŸ‘'},{k:'todayViews',l:'Today',c:'green',i:'ðŸ“ˆ'}];
+    document.getElementById('stats-grid').innerHTML=defs.map(s=>`
+      <div class="stat-card ${s.c}"><div class="stat-icon">${s.i}</div>
+      <div class="stat-value">${(stats[s.k]||0).toLocaleString()}</div>
+      <div class="stat-label">${s.l}</div></div>`).join('');
+    const maxV=Math.max(...weeklyViews.map(d=>d.views),1);
+    document.getElementById('views-chart').innerHTML=weeklyViews.length
+      ?weeklyViews.map(d=>`<div class="bar-wrap"><div class="bar" style="height:${Math.max((d.views/maxV)*100,2)}%"></div><div class="bar-label">${d.date.slice(5)}</div></div>`).join('')
+      :'<span style="color:var(--muted);font-size:13px">No data yet</span>';
+    document.getElementById('cat-chart').innerHTML=categoryBreakdown.map((c,i)=>`
+      <div class="donut-item"><div class="donut-dot" style="background:${COLS[i%COLS.length]}"></div>
+      <span>${c.name}</span><span class="donut-count">${c.post_count}</span></div>`).join('');
+    document.getElementById('top-posts').innerHTML=topPosts.map((p,i)=>`
+      <div class="top-post-item"><span class="top-rank">${i+1}</span>
+      <div class="top-info"><div class="top-title">${p.title}</div><div class="top-meta">${p.category_name||'â€”'}</div></div>
+      <span class="top-views">${(p.views||0).toLocaleString()}</span></div>`).join('');
+    document.getElementById('recent-tb').innerHTML=recentPosts.map(p=>`
+      <tr><td class="truncate">${p.title}</td>
+      <td><span class="badge badge-${p.status}">${p.status}</span></td>
+      <td style="font-size:11px;color:var(--muted)">${(p.created_at||'').slice(0,10)}</td></tr>`).join('');
+  }catch(e){ toast('Dashboard load failed','err'); }
+}
+
+// â”€â”€ POSTS LIST â”€â”€
+let dt; function debounce(fn){ clearTimeout(dt); dt=setTimeout(fn,300); }
+let currentPage = 1;
+const postsPerPage = 10;
+function resetAndFetch() { currentPage = 1; fetchPosts(); }
+function changePage(dir) { currentPage += dir; fetchPosts(); }
+
+async function renderPosts(){
+  document.getElementById('content-area').innerHTML=`
+    <div class="table-card">
+      <div class="table-header"><span class="table-title">All Posts</span></div>
+      <div class="table-filters">
+        <input type="search" class="fi" placeholder="Search..." id="srch" oninput="debounce(resetAndFetch)" style="width:200px">
+        <select class="fi" id="fst" onchange="resetAndFetch()"><option value="">All Status</option><option value="active">Published</option><option value="draft">Draft</option></select>
+        <select class="fi" id="fcat" onchange="resetAndFetch()"><option value="">All Categories</option></select>
+      </div>
+      <div style="overflow-x:auto;">
+        <table><thead><tr><th></th><th>Title</th><th>Category</th><th>Video</th><th>Homepage</th><th>Popular</th><th>Status</th><th>Views</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody id="posts-tb"></tbody></table>
+      </div>
+      <div class="pagination"><span id="posts-info"></span><div class="pag-btns" id="pag-btns" style="display:flex;gap:8px"></div></div>
+    </div>`;
+  await loadCatsFilter();
+  fetchPosts();
+}
+
+async function loadCatsFilter(){
+  try{
+    const r=await fetch(API_BASE_URL + '/api/categories',{headers:H()});
+    cats=await r.json();
+    const s=document.getElementById('fcat');
+    if(s) s.innerHTML='<option value="">All Categories</option>'+cats.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  }catch(e){}
+}
+
+async function fetchPosts(){
+  const search=document.getElementById('srch')?.value||'';
+  const status=document.getElementById('fst')?.value||'';
+  const cat=document.getElementById('fcat')?.value||'';
+  const offset = (currentPage - 1) * postsPerPage;
+  try{
+    const r=await fetch(API_BASE_URL + `/api/posts/admin/all?search=${search}&status=${status}&category=${cat}&limit=${postsPerPage}&offset=${offset}`,{headers:H()});
+    const {posts,total}=await r.json();
+    const tb=document.getElementById('posts-tb');
+    if(!tb) return;
+    tb.innerHTML=posts.length?posts.map(p=>`
+      <tr>
+        <td><img src="${getImageUrl(p.thumbnail)||'images/placeholder.jpg'}" class="post-thumb" loading="lazy"></td>
+        <td><div class="truncate" title="${p.title}">${p.title}</div></td>
+        <td style="font-size:12px;color:var(--muted)">${p.category_name||'â€”'}</td>
+        <td><span class="badge ${p.youtube_url?'badge-yes':'badge-no'}">${p.youtube_url?'Yes':'No'}</span></td>
+        <td><span class="badge ${p.show_homepage?'badge-yes':'badge-no'}">${p.show_homepage?'Yes':'No'}</span></td>
+        <td><span class="badge ${p.is_popular?'badge-yes':'badge-no'}">${p.is_popular?'Yes':'No'}</span></td>
+        <td><span class="badge badge-${p.status}">${p.status}</span></td>
+        <td style="font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:12px;font-weight:700">${p.views||0}</td>
+        <td style="font-size:11px;color:var(--muted)">${(p.created_at||'').slice(0,10)}</td>
+        <td><div class="actions-cell">
+          <button class="icon-btn" onclick="loadAndEdit(${p.id})" title="Edit">âœï¸</button>
+          <button class="icon-btn" onclick="window.open('/blog/${p.slug}')" title="View">ðŸ‘</button>
+          <button class="icon-btn danger" data-id="${p.id}" data-title="${esc(p.title)}" onclick="handleDelPost(this)" title="Delete">ðŸ—‘ï¸</button>
+        </div></td>
+      </tr>`).join(''):'<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--muted)">No posts found</td></tr>';
+    const info = document.getElementById('posts-info');
+    const btns = document.getElementById('pag-btns');
+    if(info && btns) {
+      if (total === 0) {
+        info.textContent = 'Showing 0 entries';
+        btns.innerHTML = '';
+      } else {
+        info.textContent = `Showing ${offset+1} to ${Math.min(offset+postsPerPage, total)} of ${total} entries`;
+        const totalPages = Math.ceil(total / postsPerPage);
+        btns.innerHTML = `
+          <button class="btn btn-ghost" onclick="changePage(-1)" ${currentPage <= 1 ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>Prev</button>
+          <button class="btn btn-ghost" onclick="changePage(1)" ${currentPage >= totalPages ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>Next</button>
+        `;
+      }
+    }
+  }catch(e){ toast('Failed to load posts','err'); }
+}
+
+// â”€â”€ EDITOR â”€â”€
+async function renderEditor(postData){
+  editPost=postData;
+  if(!cats.length){ try{ const r=await fetch(API_BASE_URL + '/api/categories'); cats=await r.json(); }catch(e){} }
+  const p=postData||{};
+  let affProds=[];
+  if(p.affiliate_products){ try{ affProds=JSON.parse(p.affiliate_products); }catch(e){} }
+
+  document.getElementById('content-area').innerHTML=`
+    <div class="table-card">
+      <div class="table-header">
+        <span class="table-title">${p.id?'Edit Post':'New Post'}</span>
+        <button class="btn btn-ghost" onclick="go('posts')">â† Back</button>
+      </div>
+      <div style="padding:1.5rem">
+
+        <!-- TITLE + SLUG -->
+        <div class="form-group">
+          <label>Title * <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(50â€“60 chars recommended for SEO)</span></label>
+          <input type="text" class="form-control" id="p-title" value="${esc(p.title||'')}" placeholder="Write a compelling, keyword-rich title..." oninput="cc('p-title','tc',60)">
+          <div class="char-count"><span id="tc">${(p.title||'').length}</span>/60</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category *</label>
+            <select class="form-control" id="p-cat">
+              <option value="">Select Category</option>
+              ${cats.map(c=>`<option value="${c.id}" ${p.category_id==c.id?'selected':''}>${c.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select class="form-control" id="p-status">
+              <option value="draft" ${!p.status||p.status==='draft'?'selected':''}>Draft</option>
+              <option value="active" ${p.status==='active'?'selected':''}>Published</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- EXCERPT -->
+        <div class="form-group">
+          <label>Excerpt <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(shown on cards â€” 150â€“160 chars)</span></label>
+          <textarea class="form-control" id="p-excerpt" rows="2" placeholder="Short description that appears on blog cards and search results..." oninput="cc('p-excerpt','ec',160)">${esc(p.excerpt||'')}</textarea>
+          <div class="char-count"><span id="ec">${(p.excerpt||'').length}</span>/160</div>
+        </div>
+
+        <!-- CONTENT EDITOR -->
+        <div class="form-group">
+          <label>Content *</label>
+          <div class="rich-editor">
+            <div class="editor-toolbar">
+              <button class="tb" onclick="fmt('bold')"><b>B</b></button>
+              <button class="tb" onclick="fmt('italic')"><i>I</i></button>
+              <button class="tb" onclick="fmt('underline')"><u>U</u></button>
+              <button class="tb" onclick="fmtB('h2')">H2</button>
+              <button class="tb" onclick="fmtB('h3')">H3</button>
+              <button class="tb" onclick="fmt('insertUnorderedList')">â€¢ List</button>
+              <button class="tb" onclick="fmt('insertOrderedList')">1. List</button>
+              <button class="tb" onclick="fmtB('blockquote')">Quote</button>
+              <button class="tb" onclick="insLink()">ðŸ”— Link</button>
+              <button class="tb" onclick="insTable()">Table</button>
+            </div>
+            <div class="editor-content" id="p-content" contenteditable="true">${p.content||''}</div>
+          </div>
+        </div>
+
+        <!-- TOGGLES -->
+        <div class="toggle-row">
+          <div class="toggle-item" onclick="tog('tog-home')">
+            <div class="toggle ${p.show_homepage?'on':''}" id="tog-home"></div>
+            <span class="toggle-label">Show on Homepage</span>
+          </div>
+          <div class="toggle-item" onclick="tog('tog-pop')">
+            <div class="toggle ${p.is_popular?'on':''}" id="tog-pop"></div>
+            <span class="toggle-label">Mark as Popular</span>
+          </div>
+        </div>
+
+        <!-- HOMEPAGE POSITION -->
+        <div class="form-group">
+          <label>Homepage Position <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(Kaahan dikhana hai is post ko?)</span></label>
+          <div class="pos-grid" id="pos-grid">
+            <div class="pos-item ${(!p.featured_position||p.featured_position==='none')?'selected':''}" onclick="setPos('none')">
+              <div class="pos-icon">ðŸ“‹</div>
+              <div class="pos-label">Normal Card</div>
+              <div class="pos-desc">Regular 3-col grid mein</div>
+            </div>
+            <div class="pos-item ${p.featured_position==='hero'?'selected':''}" onclick="setPos('hero')">
+              <div class="pos-icon">ðŸŽ¯</div>
+              <div class="pos-label">Hero Section</div>
+              <div class="pos-desc">Sabse upar â€” main big post</div>
+            </div>
+            <div class="pos-item ${p.featured_position==='wide'?'selected':''}" onclick="setPos('wide')">
+              <div class="pos-icon">ðŸ“°</div>
+              <div class="pos-label">Featured Wide</div>
+              <div class="pos-desc">Full-width featured card</div>
+            </div>
+            <div class="pos-item ${p.featured_position==='sidebar'?'selected':''}" onclick="setPos('sidebar')">
+              <div class="pos-icon">ðŸ“Œ</div>
+              <div class="pos-label">Hero Sidebar</div>
+              <div class="pos-desc">Hero ke right side mein</div>
+            </div>
+          </div>
+          <input type="hidden" id="p-pos" value="${p.featured_position||'none'}">
+        </div>
+
+        <!-- IMAGES -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Thumbnail Image</label>
+            <input type="file" class="form-control" id="p-thumb" accept="image/*" onchange="prevImg(this,'thumb-prev')">
+            <img id="thumb-prev" class="img-preview" src="${getImageUrl(p.thumbnail)||''}" style="${p.thumbnail?'display:block':''}">
+          </div>
+          <div class="form-group">
+            <label>OG / Social Share Image <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(1200Ã—630px)</span></label>
+            <input type="file" class="form-control" id="p-og" accept="image/*" onchange="prevImg(this,'og-prev')">
+            <img id="og-prev" class="img-preview" src="${getImageUrl(p.og_image)||''}" style="${p.og_image?'display:block':''}">
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- YOUTUBE VIDEO -->
+        <div class="section-label">YouTube Video (Optional â€” for gadget review posts)</div>
+        <div class="form-group">
+          <label>YouTube Video URL</label>
+          <input type="url" class="form-control" id="p-yt" value="${esc(p.youtube_url||'')}" placeholder="https://www.youtube.com/watch?v=... or youtu.be/..." oninput="prevYT()">
+          <div class="form-hint">Paste your YouTube video link â€” it will auto-embed on the blog post page.</div>
+          <div class="yt-preview" id="yt-preview">
+            <iframe id="yt-prev-frame" src="" allowfullscreen></iframe>
+          </div>
+        </div>
+        <script>if('${p.youtube_url}') setTimeout(prevYT,100);<\/script>
+
+        <hr class="section-divider">
+
+        <!-- AFFILIATE PRODUCTS -->
+        <div class="section-label">Affiliate Buy Links (Add products with buy buttons)</div>
+        <div class="aff-builder">
+          <div id="aff-items">${affProds.map((pr,i)=>affItemHTML(pr,i)).join('')}</div>
+          <button class="btn-add-aff" onclick="addAffItem()">+ Add Product / Buy Link</button>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- SEO -->
+        <div class="section-label">SEO Settings</div>
+        <div class="form-group">
+          <label>Focus Keyword <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(main keyword this post targets)</span></label>
+          <input type="text" class="form-control" id="p-kw" value="${esc(p.focus_keyword||'')}" placeholder="e.g. best phones under 15000">
+        </div>
+        <div class="form-group">
+          <label>SEO Title <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(50â€“60 chars)</span></label>
+          <input type="text" class="form-control" id="p-seo-t" value="${esc(p.seo_title||p.title||'')}" placeholder="SEO-optimized title..." oninput="cc('p-seo-t','stc',60)">
+          <div class="char-count"><span id="stc">${(p.seo_title||p.title||'').length}</span>/60</div>
+        </div>
+        <div class="form-group">
+          <label>SEO Description <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(150â€“160 chars)</span></label>
+          <textarea class="form-control" id="p-seo-d" rows="2" placeholder="Meta description for Google search results..." oninput="cc('p-seo-d','sdc',160)">${esc(p.seo_description||'')}</textarea>
+          <div class="char-count"><span id="sdc">${(p.seo_description||'').length}</span>/160</div>
+        </div>
+        <div class="form-group">
+          <label>Tags <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(comma separated)</span></label>
+          <input type="text" class="form-control" id="p-tags" value="${esc(p.tags||'')}" placeholder="iPhone, Budget Phone, Tech Review, 2025">
+        </div>
+
+        <!-- SAVE BUTTONS -->
+        <div style="display:flex;gap:8px;margin-top:1.5rem">
+          <button class="btn btn-primary" onclick="savePost('active')">Publish</button>
+          <button class="btn btn-ghost" onclick="savePost('draft')">Save Draft</button>
+          <button class="btn btn-ghost" onclick="go('posts')">Cancel</button>
+        </div>
+
+      </div>
+    </div>`;
+
+  // Init char counts
+  ['p-title,tc,60','p-excerpt,ec,160','p-seo-t,stc,60','p-seo-d,sdc,160'].forEach(s=>{
+    const [id,cid,max]=s.split(',');
+    const el=document.getElementById(id);
+    if(el) el.dispatchEvent(new Event('input'));
+  });
+}
+
+// Affiliate item HTML
+let affCount=0;
+function affItemHTML(pr={},idx){
+  const i=idx!==undefined?idx:affCount++;
+  return `<div class="aff-item" id="aff-${i}">
+    <button class="aff-remove" onclick="document.getElementById('aff-${i}').remove()">âœ•</button>
+    <div class="aff-item-row">
+      <div class="form-group" style="margin:0"><label>Product Name *</label>
+        <input type="text" class="form-control aff-name" value="${esc(pr.name||'')}" placeholder="e.g. iPhone 16 128GB"></div>
+      <div class="form-group" style="margin:0"><label>Price</label>
+        <input type="text" class="form-control aff-price" value="${esc(pr.price||'')}" placeholder="e.g. â‚¹79,900"></div>
+    </div>
+    <div class="form-group" style="margin-bottom:.75rem"><label>Affiliate Buy Link *</label>
+      <input type="url" class="form-control aff-link" value="${esc(pr.link||'')}" placeholder="https://amzn.to/... or Flipkart link..."></div>
+    <div class="aff-item-row3">
+      <div class="form-group" style="margin:0"><label>Platform</label>
+        <select class="form-control aff-platform">
+          ${['Amazon','Flipkart','Meesho','Myntra','Other'].map(pl=>`<option value="${pl}" ${pr.platform===pl?'selected':''}>${pl}</option>`).join('')}
+        </select></div>
+      <div class="form-group" style="margin:0"><label>Product Image URL</label>
+        <input type="url" class="form-control aff-img" value="${esc(pr.image||'')}" placeholder="https://...product-image.jpg"></div>
+      <div class="form-group" style="margin:0"><label>Note (optional)</label>
+        <input type="text" class="form-control aff-note" value="${esc(pr.note||'')}" placeholder="Best seller, limited time offer..."></div>
+    </div>
+  </div>`;
+}
+
+function addAffItem(){
+  const container=document.getElementById('aff-items');
+  const div=document.createElement('div');
+  div.innerHTML=affItemHTML({},affCount++);
+  container.appendChild(div.firstChild);
+}
+
+function getAffProducts(){
+  const items=document.querySelectorAll('#aff-items .aff-item');
+  return Array.from(items).map(item=>({
+    name:item.querySelector('.aff-name')?.value||'',
+    price:item.querySelector('.aff-price')?.value||'',
+    link:item.querySelector('.aff-link')?.value||'',
+    platform:item.querySelector('.aff-platform')?.value||'Amazon',
+    image:item.querySelector('.aff-img')?.value||'',
+    note:item.querySelector('.aff-note')?.value||''
+  })).filter(p=>p.name&&p.link);
+}
+
+// YouTube preview
+function prevYT(){
+  const url=document.getElementById('p-yt')?.value||'';
+  const match=url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  const wrap=document.getElementById('yt-preview');
+  const frame=document.getElementById('yt-prev-frame');
+  if(match&&wrap&&frame){ wrap.style.display='block'; frame.src='https://www.youtube.com/embed/'+match[1]; }
+  else if(wrap){ wrap.style.display='none'; }
+}
+
+// Editor helpers
+function fmt(cmd){ document.execCommand(cmd,false,null); document.getElementById('p-content')?.focus(); }
+function fmtB(tag){ document.execCommand('formatBlock',false,tag); document.getElementById('p-content')?.focus(); }
+function insLink(){ const u=prompt('Enter URL:'); if(u) document.execCommand('createLink',false,u); }
+function insTable(){ document.execCommand('insertHTML',false,'<table border="1" style="width:100%;border-collapse:collapse"><tr><th>Column 1</th><th>Column 2</th></tr><tr><td>Data</td><td>Data</td></tr></table>'); }
+function tog(id){ document.getElementById(id)?.classList.toggle('on'); }
+function setPos(val){
+  document.querySelectorAll('.pos-item').forEach(i=>i.classList.remove('selected'));
+  document.querySelector(`.pos-item[onclick="setPos('${val}')"]`)?.classList.add('selected');
+  document.getElementById('p-pos').value=val;
+}
+function prevImg(input,pid){ const f=input.files[0]; if(!f) return; const r=new FileReader(); r.onload=e=>{const i=document.getElementById(pid);i.src=e.target.result;i.style.display='block';}; r.readAsDataURL(f); }
+function cc(id,cid,max){ const el=document.getElementById(id); const c=document.getElementById(cid); if(!el||!c)return; const len=(el.value||el.textContent||'').length; c.textContent=len; c.style.color=len>max?'var(--accent)':'var(--muted)'; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+async function savePost(forceStatus){
+  const title=document.getElementById('p-title')?.value.trim();
+  if(!title){ toast('Title is required','err'); return; }
+  const fd=new FormData();
+  fd.append('title',title);
+  fd.append('excerpt',document.getElementById('p-excerpt')?.value||'');
+  fd.append('content',document.getElementById('p-content')?.innerHTML||'');
+  fd.append('category_id',document.getElementById('p-cat')?.value||'');
+  fd.append('status',forceStatus||document.getElementById('p-status')?.value||'draft');
+  fd.append('show_homepage',document.getElementById('tog-home')?.classList.contains('on')?'1':'0');
+  fd.append('is_popular',document.getElementById('tog-pop')?.classList.contains('on')?'1':'0');
+  fd.append('seo_title',document.getElementById('p-seo-t')?.value||title);
+  fd.append('seo_description',document.getElementById('p-seo-d')?.value||'');
+  fd.append('tags',document.getElementById('p-tags')?.value||'');
+  fd.append('youtube_url',document.getElementById('p-yt')?.value||'');
+  fd.append('focus_keyword',document.getElementById('p-kw')?.value||'');
+  fd.append('affiliate_products',JSON.stringify(getAffProducts()));
+  fd.append('featured_position',document.getElementById('p-pos')?.value||'none');
+  const thumb=document.getElementById('p-thumb')?.files[0];
+  const og=document.getElementById('p-og')?.files[0];
+  if(thumb) fd.append('thumbnail',thumb);
+  if(og) fd.append('og_image',og);
+  try{
+    const url=editPost?.id?`/api/posts/admin/${editPost.id}`:'/api/posts/admin/create';
+    const method=editPost?.id?'PUT':'POST';
+    const r=await fetch(url,{method,headers:{'Authorization':'Bearer '+TOKEN},body:fd});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.error);
+    toast(editPost?.id?'Post updated!':'Post published!');
+    editPost=null; go('posts');
+  }catch(e){ toast(e.message||'Save failed','err'); }
+}
+
+async function loadAndEdit(id){
+  try{
+    const r=await fetch(API_BASE_URL + `/api/posts/admin/post/${id}`,{headers:H()});
+    if(!r.ok) throw new Error('Post not found');
+    const {post}=await r.json();
+    if(post){ go('new-post'); renderEditor(post); }
+  }catch(e){ toast('Failed to load post: '+e.message,'err'); }
+}
+
+function handleDelPost(btn){
+  const id = btn.getAttribute('data-id');
+  const title = btn.getAttribute('data-title');
+  delPost(id, title);
+}
+
+async function delPost(id, title){
+  if(!confirm('Delete post: "' + title + '"?\n\nThis cannot be undone.')) return;
+  try{
+    const r = await fetch(API_BASE_URL + '/api/posts/admin/' + id, {method:'DELETE', headers:H()});
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(d.error || 'Delete failed');
+    toast('Post deleted successfully!');
+    fetchPosts();
+  }catch(e){ toast(e.message || 'Delete failed', 'err'); }
+}
+
+// â”€â”€ CATEGORIES â”€â”€
+function renderCats(){
+  document.getElementById('content-area').innerHTML=`
+    <div class="table-card">
+      <div class="table-header"><span class="table-title">Categories</span></div>
+      <table><thead><tr><th>#</th><th>Name</th><th>Slug</th><th>Posts</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="cats-tb"></tbody></table>
+    </div>
+    <div class="modal-overlay hidden" id="cat-modal">
+      <div class="modal">
+        <div class="modal-header"><span class="modal-title" id="cat-modal-t">New Category</span><button class="modal-close" onclick="closeCat()">Ã—</button></div>
+        <div class="modal-body">
+          <div class="form-group"><label>Name *</label><input type="text" class="form-control" id="cat-name" placeholder="e.g. Student Life"></div>
+          <div class="form-group"><label>Status</label><select class="form-control" id="cat-st"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+        </div>
+        <div class="modal-footer"><button class="btn btn-primary" onclick="saveCat()">Save</button><button class="btn btn-ghost" onclick="closeCat()">Cancel</button></div>
+      </div>
+    </div>`;
+  fetchCats();
+}
+
+async function fetchCats(){
+  try{
+    const r=await fetch(API_BASE_URL + '/api/categories/admin/all',{headers:H()});
+    const cats=await r.json();
+    document.getElementById('cats-tb').innerHTML=cats.map((c,i)=>`
+      <tr><td style="color:var(--muted)">${i+1}</td><td style="font-weight:500">${c.name}</td>
+      <td style="font-size:12px;color:var(--muted);font-family:monospace">${c.slug}</td>
+      <td style="font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:700">${c.post_count}</td>
+      <td><span class="badge badge-${c.status==='active'?'active':'draft'}">${c.status}</span></td>
+      <td><div class="actions-cell">
+        <button class="icon-btn" onclick='openCatModal(${JSON.stringify(c).replace(/"/g,"&quot;")})'>âœï¸</button>
+        <button class="icon-btn danger" onclick="delCat(${c.id},'${c.name.replace(/'/g,"\\'")}',${c.post_count})">ðŸ—‘ï¸</button>
+      </div></td></tr>`).join('');
+  }catch(e){ toast('Failed','err'); }
+}
+
+function openCatModal(cat=null){
+  editCat=cat;
+  document.getElementById('cat-modal-t').textContent=cat?'Edit Category':'New Category';
+  document.getElementById('cat-name').value=cat?.name||'';
+  document.getElementById('cat-st').value=cat?.status||'active';
+  document.getElementById('cat-modal').classList.remove('hidden');
+}
+function closeCat(){ document.getElementById('cat-modal').classList.add('hidden'); editCat=null; }
+
+async function saveCat(){
+  const name=document.getElementById('cat-name').value.trim();
+  if(!name){ toast('Name required','err'); return; }
+  const status=document.getElementById('cat-st').value;
+  try{
+    const url=editCat?`/api/categories/admin/${editCat.id}`:'/api/categories/admin/create';
+    const r=await fetch(url,{method:editCat?'PUT':'POST',headers:H(),body:JSON.stringify({name,status})});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.error);
+    toast(editCat?'Category updated':'Category created');
+    closeCat(); fetchCats();
+  }catch(e){ toast(e.message,'err'); }
+}
+
+async function delCat(id,name,count){
+  if(count>0){ toast(`Cannot delete: ${count} posts use this category`,'err'); return; }
+  if(!confirm(`Delete "${name}"?`)) return;
+  try{
+    const r=await fetch(API_BASE_URL + `/api/categories/admin/${id}`,{method:'DELETE',headers:H()});
+    if(!r.ok) throw new Error('Delete failed');
+    toast('Deleted'); fetchCats();
+  }catch(e){ toast(e.message,'err'); }
+}
+
+// â”€â”€ SETTINGS â”€â”€
+function renderSettings(){
+  document.getElementById('content-area').innerHTML=`
+    <div class="table-card" style="max-width:480px">
+      <div class="table-header"><span class="table-title">Change Password</span></div>
+      <div style="padding:1.5rem">
+        <div class="form-group"><label>Current Password</label><input type="password" class="form-control" id="cur-p"></div>
+        <div class="form-group"><label>New Password</label><input type="password" class="form-control" id="new-p"></div>
+        <div class="form-group"><label>Confirm New Password</label><input type="password" class="form-control" id="conf-p"></div>
+        <button class="btn btn-primary" onclick="changePass()">Update Password</button>
+      </div>
+    </div>`;
+}
+
+async function changePass(){
+  const cur=document.getElementById('cur-p').value;
+  const nw=document.getElementById('new-p').value;
+  const conf=document.getElementById('conf-p').value;
+  if(!cur||!nw||!conf) return toast('All fields required','err');
+  if(nw.length < 8) return toast('New password must be at least 8 characters','err');
+  if(nw!==conf) return toast('Passwords do not match','err');
+  try{
+    const r=await fetch(API_BASE_URL + '/api/auth/change-password',{method:'POST',headers:H(),body:JSON.stringify({currentPassword:cur,newPassword:nw})});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.error);
+    toast('Password updated!');
+  }catch(e){ toast(e.message,'err'); }
+}
+
+// â”€â”€ INIT â”€â”€ validate stored token with server before bypassing login
+async function initApp(){
+  if(!TOKEN){
+    // No token at all â€” show login
+    document.getElementById('login-page').classList.remove('hidden');
+    document.getElementById('admin-app').classList.add('hidden');
+    return;
+  }
+  try{
+    // Verify the token is still valid by hitting a protected endpoint
+    const r = await fetch(API_BASE_URL + '/api/posts/admin/all?limit=1&offset=0', {headers: H()});
+    if(r.status === 401 || r.status === 403){
+      // Token expired or invalid â€” force re-login
+      localStorage.removeItem('sx_token');
+      TOKEN = null;
+      document.getElementById('login-page').classList.remove('hidden');
+      document.getElementById('admin-app').classList.add('hidden');
+      return;
+    }
+    // Token is valid â€” proceed to dashboard
+    document.getElementById('login-page').classList.add('hidden');
+    document.getElementById('admin-app').classList.remove('hidden');
+    go('dashboard');
+  } catch(e){
+    // Network error â€” still allow if token exists (offline resilience)
+    document.getElementById('login-page').classList.add('hidden');
+    document.getElementById('admin-app').classList.remove('hidden');
+    go('dashboard');
+  }
+}
+initApp();
+</script>
+</body>
+</html>

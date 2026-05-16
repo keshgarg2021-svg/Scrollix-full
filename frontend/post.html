@@ -1,0 +1,380 @@
+﻿<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Loading... â€” Scrollix</title>
+<meta name="description" id="meta-desc" content="">
+<meta property="og:title" id="og-title" content="">
+<meta property="og:description" id="og-desc" content="">
+<meta property="og:image" id="og-image" content="">
+<meta property="og:type" content="article">
+<link rel="canonical" id="canonical" href="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0a0a0a;--cream:#f5f0e8;--accent:#e63329;--ink:#1a1a1a;--muted:#6b6b6b;--border:#e0dbd0;--card:#fff;--nav:#0a0a0a;--green:#16a34a;--orange:#d97706;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+  a{color:inherit}
+
+  /* NAV */
+  nav{background:var(--nav);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid #222}
+  .logo{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:1.8rem;color:white;text-decoration:none;padding:1rem 0}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;list-style:none}
+  .nav-links a{color:#aaa;text-decoration:none;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:1.4rem 1rem;display:block;transition:color .2s;border-bottom:2px solid transparent}
+  .nav-links a:hover{color:white;border-bottom-color:var(--accent)}
+
+  /* BREADCRUMB */
+  .breadcrumb{background:white;border-bottom:1px solid var(--border);padding:.75rem 0}
+  .bc{max-width:1200px;margin:0 auto;padding:0 1.5rem;font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .bc a{color:var(--muted);text-decoration:none}.bc a:hover{color:var(--accent)}
+
+  /* LAYOUT */
+  .wrap{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+  .layout{display:grid;grid-template-columns:1fr 300px;gap:2.5rem;padding:2.5rem 0}
+
+  /* POST */
+  .post-tag{display:inline-block;background:var(--accent);color:white;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;text-decoration:none;margin-bottom:14px}
+  h1.post-title{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:2.2rem;font-weight:900;line-height:1.2;margin-bottom:1rem}
+  .post-meta{display:flex;gap:1.5rem;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;color:var(--muted);margin-bottom:1.5rem;flex-wrap:wrap;align-items:center}
+  .post-meta strong{color:var(--ink)}
+  .post-thumbnail{width:100%;height:400px;object-fit:cover;display:block;border-radius:4px;margin-bottom:2rem;background:#e8e3d8}
+
+  /* YOUTUBE EMBED */
+  .yt-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;margin-bottom:2rem;background:#000}
+  .yt-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+
+  /* AFFILIATE PRODUCTS */
+  .affiliate-section{background:white;border:2px solid var(--border);border-radius:8px;padding:1.5rem;margin:2rem 0}
+  .aff-title{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+  .aff-title::before{content:'';display:block;width:3px;height:16px;background:var(--accent)}
+  .aff-grid{display:flex;flex-direction:column;gap:12px}
+  .aff-card{display:flex;align-items:center;gap:1rem;padding:1rem;border:1px solid var(--border);border-radius:6px;background:var(--cream);transition:border-color .2s}
+  .aff-card:hover{border-color:var(--accent)}
+  .aff-img{width:72px;height:72px;object-fit:contain;border-radius:4px;background:white;padding:4px;flex-shrink:0;border:1px solid var(--border)}
+  .aff-img-placeholder{width:72px;height:72px;background:#e8e3d8;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+  .aff-info{flex:1;min-width:0}
+  .aff-name{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:700;font-size:1rem;color:var(--ink);margin-bottom:4px}
+  .aff-price{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:1.1rem;color:var(--green)}
+  .aff-platform{font-size:11px;color:var(--muted);font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  .aff-note{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4}
+  .btn-buy{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:white;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:10px 18px;text-decoration:none;border-radius:4px;white-space:nowrap;transition:background .2s;flex-shrink:0}
+  .btn-buy:hover{background:#c52820}
+  .btn-buy.flipkart{background:#2874f0}.btn-buy.flipkart:hover{background:#1a5fd4}
+  .btn-buy.meesho{background:#9b2c8a}.btn-buy.meesho:hover{background:#7a1f6e}
+  .btn-buy.other{background:var(--orange)}.btn-buy.other:hover{background:#b45309}
+  .affiliate-disclaimer{font-size:11px;color:var(--muted);font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+
+  /* ARTICLE CONTENT */
+  .post-content{font-size:1.05rem;line-height:1.85;color:#2a2a2a}
+  .post-content h2{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:1.6rem;font-weight:700;margin:2rem 0 1rem;color:var(--ink)}
+  .post-content h3{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:1.2rem;font-weight:700;margin:1.5rem 0 .75rem}
+  .post-content p{margin-bottom:1.25rem}
+  .post-content ul,.post-content ol{margin:1rem 0 1.25rem 1.5rem}
+  .post-content li{margin-bottom:.5rem}
+  .post-content blockquote{border-left:3px solid var(--accent);padding:.75rem 1.25rem;background:#fff;margin:1.5rem 0;font-style:italic;color:var(--muted)}
+  .post-content img{max-width:100%;height:auto;margin:1.5rem 0;border-radius:4px}
+  .post-content a{color:var(--accent);text-decoration:underline}
+  .post-content strong{font-weight:600}
+  .post-content table{width:100%;border-collapse:collapse;margin:1.5rem 0}
+  .post-content th,.post-content td{padding:.6rem 1rem;border:1px solid var(--border);font-size:.95rem}
+  .post-content th{background:var(--ink);color:white;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+
+  /* SHARE */
+  .share-bar{display:flex;gap:10px;margin:2rem 0;flex-wrap:wrap;padding:1.25rem;background:white;border:1px solid var(--border);border-radius:6px}
+  .share-label{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);align-self:center}
+  .share-btn{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border:none;cursor:pointer;color:white;border-radius:4px}
+  .share-wa{background:#25D366}.share-tw{background:#1DA1F2}.share-copy{background:var(--ink)}
+
+  /* TAGS */
+  .post-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+  .tag-pill{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:600;padding:5px 12px;border:1px solid var(--border);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;text-decoration:none;transition:all .2s}
+  .tag-pill:hover{background:var(--ink);color:white;border-color:var(--ink)}
+
+  /* RELATED */
+  .related-section{margin-top:3rem}
+  .section-hdr{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:2px solid var(--ink)}
+  .related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .rel-card{background:var(--card);border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform .2s}
+  .rel-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .rel-card img{width:100%;height:140px;object-fit:cover;background:#e8e3d8}
+  .rel-body{padding:1rem}
+  .rel-tag{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .rel-title{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:.9rem;font-weight:700;line-height:1.35;color:var(--ink)}
+
+  /* SIDEBAR */
+  .sidebar-widget{background:var(--card);border:1px solid var(--border);margin-bottom:1.5rem;overflow:hidden}
+  .wid-hdr{background:var(--ink);color:white;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 16px}
+  .wid-body{padding:1rem}
+  .pop-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer}
+  .pop-item:last-child{border-bottom:none}
+  .pop-num{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:1.5rem;font-weight:700;color:var(--border);line-height:1;min-width:26px}
+  .pop-title{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:.88rem;line-height:1.4;color:var(--ink);font-weight:700}
+  .pop-meta{font-size:11px;color:var(--muted);font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;margin-top:3px}
+
+  /* AD SLOTS */
+  .ad-slot{background:transparent;margin:1.5rem 0}
+
+  /* FOOTER */
+  footer{background:var(--black);color:white;padding:2rem 0;margin-top:3rem;text-align:center;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px}
+  footer a{color:#555;text-decoration:none;margin:0 1rem}.footer a:hover{color:white}
+  .foot-logo{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:1.4rem;color:white;margin-bottom:.75rem}
+  .foot-logo span{color:var(--accent)}
+
+  /* SKELETON */
+  .skeleton{background:linear-gradient(90deg,#e8e3d8 25%,#f0ece3 50%,#e8e3d8 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px}
+  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+  @media(max-width:768px){.layout{grid-template-columns:1fr}.post-title{font-size:1.6rem}.related-grid{grid-template-columns:1fr}.nav-links{display:none}.aff-card{flex-wrap:wrap}}
+  h1, h2, h3, h4, .hero-title, .card-title, .viral-title, .popular-title, .side-title { font-weight: 700 !important; letter-spacing: -0.02em; } /* heading tweak */
+  .logo, .footer-logo { font-family: 'Audiowide', cursive !important; letter-spacing: 0.02em; text-transform: uppercase; font-size: 2.1rem !important; } 
+  .footer-logo { font-size: 1.7rem !important; }
+</style>
+  <script src="/js/config.js"></script>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Scroll<span>ix</span></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/category/viral-news">Viral News</a></li>
+    <li><a href="/category/student-life">Student Life</a></li>
+    <li><a href="/category/ai-tools">AI & Tools</a></li>
+    <li><a href="/category/make-money-online">Make Money</a></li>
+    <li><a href="/category/tech-gadgets">Tech</a></li>
+  </ul>
+</nav>
+
+<div class="breadcrumb">
+  <div class="bc">
+    <a href="/">Home</a> <span>/</span>
+    <a href="#" id="bc-cat">Category</a> <span>/</span>
+    <span id="bc-title" style="color:var(--ink)">Loading...</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- AD SLOT TOP -->
+  <!-- AD SLOT: Post Top Banner 728x90 â€” paste AdSense code here -->
+  <div class="ad-slot" style="height:90px;"></div>
+
+  <div class="layout">
+    <main>
+      <article itemscope itemtype="https://schema.org/BlogPosting">
+
+        <a href="#" class="post-tag" id="post-cat-tag">Category</a>
+        <h1 class="post-title" id="post-title" itemprop="headline">Loading...</h1>
+
+        <div class="post-meta">
+          <span>By <strong itemprop="author" id="post-author">Scrollix Team</strong></span>
+          <span id="post-date" itemprop="datePublished"></span>
+          <span id="post-readtime"></span>
+          <span id="post-views"></span>
+        </div>
+
+        <!-- THUMBNAIL (shown if no YouTube) -->
+        <img src="images/placeholder.jpg" id="post-thumbnail" alt="" class="post-thumbnail" itemprop="image">
+
+        <!-- YOUTUBE EMBED (shown if video exists) -->
+        <div class="yt-wrap" id="yt-wrap" style="display:none">
+          <iframe id="yt-iframe" src="" title="YouTube video" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        </div>
+
+        <!-- AD SLOT MID -->
+        <!-- AD SLOT: Post Mid 970x90 â€” paste AdSense code here -->
+        <div class="ad-slot" style="height:90px;"></div>
+
+        <!-- ARTICLE BODY -->
+        <div class="post-content" id="post-content" itemprop="articleBody">
+          <div class="skeleton" style="height:1.2rem;margin-bottom:.8rem"></div>
+          <div class="skeleton" style="height:1.2rem;margin-bottom:.8rem;width:90%"></div>
+          <div class="skeleton" style="height:1.2rem;margin-bottom:.8rem;width:95%"></div>
+        </div>
+
+        <!-- AFFILIATE PRODUCTS -->
+        <div class="affiliate-section" id="aff-section" style="display:none">
+          <div class="aff-title">Buy Links â€” Best Prices</div>
+          <div class="aff-grid" id="aff-grid"></div>
+          <div class="affiliate-disclaimer">* Ye affiliate links hain. Agar tum in links se kharido toh humhe ek chhoti si commission milti hai â€” tumhare liye price same rehta hai. Thank you for supporting Scrollix!</div>
+        </div>
+
+        <!-- AD SLOT AFTER AFFILIATE -->
+        <!-- AD SLOT: Post After Products â€” paste AdSense code here -->
+        <div class="ad-slot" style="height:90px;"></div>
+
+        <!-- SHARE -->
+        <div class="share-bar">
+          <span class="share-label">Share:</span>
+          <button class="share-btn share-wa" onclick="shareWA()">WhatsApp</button>
+          <button class="share-btn share-tw" onclick="shareTW()">Twitter/X</button>
+          <button class="share-btn share-copy" onclick="copyLink()">Copy Link</button>
+        </div>
+
+        <!-- TAGS -->
+        <div class="post-tags" id="post-tags"></div>
+
+      </article>
+
+      <!-- RELATED -->
+      <div class="related-section">
+        <div class="section-hdr">Related Articles</div>
+        <div class="related-grid" id="related-grid"></div>
+      </div>
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <!-- AD SLOT: Sidebar 300x250 -->
+      <div style="width:300px;min-height:250px;margin-bottom:1.5rem;background:transparent;"></div>
+
+      <div class="sidebar-widget">
+        <div class="wid-hdr">Most Read</div>
+        <div class="wid-body" id="popular-sidebar"></div>
+      </div>
+
+      <!-- AD SLOT: Sidebar 300x600 -->
+      <div style="width:300px;min-height:300px;background:transparent;"></div>
+    </aside>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">Scroll<span>ix</span></div>
+  <div><a href="/">Home</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a></div>
+  <p style="margin-top:.75rem;color:#444">Â© 2026 Scrollix. All rights reserved.</p>
+</footer>
+
+<script type="application/ld+json" id="post-schema">{}</script>
+<script>
+const slug = window.location.pathname.replace('/blog/','').replace(/\/$/,'');
+
+function timeAgo(d){const diff=Date.now()-new Date(d);const days=Math.floor(diff/86400000);if(days>0)return days+' day'+(days>1?'s':'')+' ago';const hrs=Math.floor(diff/3600000);if(hrs>0)return hrs+'h ago';return Math.floor(diff/60000)+'m ago';}
+function readTime(txt){return Math.ceil((txt||'').replace(/<[^>]*>/g,'').split(/\s+/).length/200)+' min read';}
+
+function platformClass(p){
+  const pl=(p||'').toLowerCase();
+  if(pl.includes('flipkart')) return 'flipkart';
+  if(pl.includes('meesho')) return 'meesho';
+  if(pl.includes('amazon')) return '';
+  return 'other';
+}
+
+function affCardHTML(prod){
+  const btnClass = platformClass(prod.platform);
+  return `<div class="aff-card">
+    ${prod.image ? `<img src="${prod.image}" alt="${prod.name}" class="aff-img" loading="lazy">` : `<div class="aff-img-placeholder">ðŸ›ï¸</div>`}
+    <div class="aff-info">
+      <div class="aff-name">${prod.name}</div>
+      ${prod.price ? `<div class="aff-price">${prod.price}</div>` : ''}
+      <div class="aff-platform">${prod.platform||'Online Store'}</div>
+      ${prod.note ? `<div class="aff-note">${prod.note}</div>` : ''}
+    </div>
+    <a href="${prod.link}" target="_blank" rel="nofollow noopener" class="btn-buy ${btnClass}">Buy Now â†’</a>
+  </div>`;
+}
+
+async function loadPost(){
+  try{
+    const res = await fetch(API_BASE_URL + '/api/posts/'+slug);
+    if(!res.ok){ document.getElementById('post-title').textContent='Post not found'; return; }
+    const {post,related} = await res.json();
+
+    // Meta
+    document.getElementById('page-title').textContent = (post.seo_title||post.title)+' â€” Scrollix';
+    document.getElementById('meta-desc').content = post.seo_description||post.excerpt||'';
+    document.getElementById('og-title').content = post.title;
+    document.getElementById('og-desc').content = post.excerpt||'';
+    document.getElementById('og-image').content = post.og_image||post.thumbnail||'';
+    document.getElementById('canonical').href = 'https://scrollix.in/blog/'+post.slug;
+
+    // Header
+    document.getElementById('post-title').textContent = post.title;
+    document.getElementById('post-cat-tag').textContent = post.category_name||'General';
+    document.getElementById('post-cat-tag').href = '/category/'+post.category_slug;
+    document.getElementById('bc-cat').textContent = post.category_name||'General';
+    document.getElementById('bc-cat').href = '/category/'+post.category_slug;
+    document.getElementById('bc-title').textContent = post.title.substring(0,55)+(post.title.length>55?'...':'');
+    document.getElementById('post-date').textContent = new Date(post.created_at).toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'});
+    document.getElementById('post-readtime').textContent = readTime(post.content);
+    document.getElementById('post-views').textContent = (post.views||0)+' views';
+
+    // YouTube or thumbnail
+    if(post.youtube_embed){
+      document.getElementById('post-thumbnail').style.display='none';
+      document.getElementById('yt-wrap').style.display='block';
+      document.getElementById('yt-iframe').src = post.youtube_embed;
+    } else if(post.thumbnail){
+      document.getElementById('post-thumbnail').src = post.thumbnail;
+      document.getElementById('post-thumbnail').alt = post.title;
+    }
+
+    // Content
+    document.getElementById('post-content').innerHTML = post.content||'<p>Content coming soon.</p>';
+
+    // Affiliate products
+    const prods = post.affiliate_products||[];
+    if(prods.length){
+      document.getElementById('aff-section').style.display='block';
+      document.getElementById('aff-grid').innerHTML = prods.map(affCardHTML).join('');
+    }
+
+    // Tags
+    if(post.tags){
+      document.getElementById('post-tags').innerHTML = post.tags.split(',').filter(t=>t.trim()).map(t=>
+        `<a href="/search?q=${encodeURIComponent(t.trim())}" class="tag-pill">${t.trim()}</a>`
+      ).join('');
+    }
+
+    // Schema
+    document.getElementById('post-schema').textContent = JSON.stringify({
+      "@context":"https://schema.org","@type":"BlogPosting",
+      "headline":post.title,"description":post.excerpt||'',
+      "image":post.thumbnail||'',
+      "datePublished":post.created_at,"dateModified":post.updated_at||post.created_at,
+      "author":{"@type":"Person","name":"Scrollix Team"},
+      "publisher":{"@type":"Organization","name":"Scrollix","logo":{"@type":"ImageObject","url":"https://scrollix.in/images/logo.png"}},
+      "mainEntityOfPage":{"@type":"WebPage","@id":"https://scrollix.in/blog/"+post.slug},
+      ...(post.youtube_url?{"video":{"@type":"VideoObject","embedUrl":post.youtube_embed}}:{})
+    });
+
+    // Related
+    if(related&&related.length){
+      document.getElementById('related-grid').innerHTML = related.map(p=>`
+        <div class="rel-card" onclick="window.location='/blog/${p.slug}'">
+          <img src="${p.thumbnail||'images/placeholder.jpg'}" alt="${p.title}" loading="lazy">
+          <div class="rel-body"><div class="rel-tag">${p.category_name||''}</div>
+          <div class="rel-title">${p.title}</div></div>
+        </div>`).join('');
+    }
+
+  }catch(e){ console.error(e); }
+
+  // Popular sidebar
+  try{
+    const res = await fetch(API_BASE_URL + '/api/posts?popular=1&limit=5');
+    const data = await res.json();
+    const posts = data?.posts || [];
+    if(posts.length){
+      document.getElementById('popular-sidebar').innerHTML = posts.map((p,i)=>`
+        <div class="pop-item" onclick="window.location='/blog/${p.slug}'">
+          <span class="pop-num">${String(i+1).padStart(2,'0')}</span>
+          <div><div class="pop-title">${p.title}</div>
+          <div class="pop-meta">${p.views||0} views Â· ${p.category_name||''}</div></div>
+        </div>`).join('');
+    }
+  }catch(e){}
+}
+
+function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent(document.title+' â€” '+window.location.href));}
+function shareTW(){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(window.location.href));}
+function copyLink(){navigator.clipboard.writeText(window.location.href).then(()=>{ const btn=document.querySelector('.share-copy'); btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy Link',2000); });}
+
+fetch(API_BASE_URL + '/api/analytics/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:window.location.pathname})}).catch(()=>{});
+loadPost();
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Scrollix — Get in Touch</title>
+<meta name="description" content="Contact Scrollix for guest posts, advertising, sponsorships, or general queries. We'd love to hear from you.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://scrollix.in/contact.html">
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0a0a0a;--cream:#f5f0e8;--accent:#e63329;--ink:#1a1a1a;--muted:#6b6b6b;--border:#e0dbd0;--card:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;background:var(--cream);color:var(--ink)}
+  nav{background:var(--black);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:1.8rem;color:white;text-decoration:none;padding:1rem 0}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;list-style:none}
+  .nav-links a{color:#aaa;text-decoration:none;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:1.4rem 1rem;display:block;transition:color .2s}
+  .nav-links a:hover{color:white}
+  .hero{background:var(--black);color:white;padding:3.5rem 2rem;text-align:center}
+  .hero h1{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:2.2rem;font-weight:900;margin-bottom:.75rem}
+  .hero p{color:#888;font-size:.95rem;max-width:500px;margin:0 auto;line-height:1.7}
+  .container{max-width:900px;margin:0 auto;padding:3rem 1.5rem}
+  .layout{display:grid;grid-template-columns:1fr 340px;gap:2rem}
+  .card{background:var(--card);border:1px solid var(--border);padding:2rem;margin-bottom:1.5rem}
+  h2{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:1.25rem;color:var(--ink)}
+  p{margin-bottom:1rem;line-height:1.8;font-size:.9rem;color:#333}
+  .form-group{margin-bottom:1.1rem}
+  label{display:block;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  input,textarea,select{width:100%;background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:10px 14px;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:14px;border-radius:4px;outline:none;transition:border .2s}
+  input:focus,textarea:focus,select:focus{border-color:var(--accent)}
+  textarea{resize:vertical;min-height:130px}
+  .btn{display:block;width:100%;background:var(--accent);color:white;padding:12px;border:none;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:background .2s;text-align:center}
+  .btn:hover{background:#c52820}
+  .success-msg{background:#f0fdf4;border:1px solid #86efac;color:#166534;padding:1rem;border-radius:4px;font-size:.9rem;display:none;margin-top:1rem}
+  .contact-item{display:flex;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border);align-items:flex-start}
+  .contact-item:last-child{border-bottom:none}
+  .c-icon{font-size:1.2rem;margin-top:2px;flex-shrink:0}
+  .c-label{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+  .c-value{font-size:.9rem;color:var(--ink)}
+  .c-value a{color:var(--accent);text-decoration:none}
+  .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1rem 0}
+  .type-item{padding:.75rem 1rem;background:var(--cream);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all .2s;text-align:center}
+  .type-item:hover,.type-item.selected{background:var(--accent);color:white;border-color:var(--accent)}
+  .type-item .ti{font-size:1.2rem;display:block;margin-bottom:4px}
+  .type-item span{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+  footer{background:var(--black);color:#555;padding:2rem 0;text-align:center;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;margin-top:3rem}
+  footer a{color:#555;text-decoration:none;margin:0 1rem}
+  .footer-logo{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:1.4rem;color:white;margin-bottom:.75rem}
+  .footer-logo span{color:var(--accent)}
+  @media(max-width:768px){.layout{grid-template-columns:1fr}.nav-links{display:none}.type-grid{grid-template-columns:1fr 1fr}}
+  h1, h2, h3, h4, .hero-title, .card-title, .viral-title, .popular-title, .side-title { font-weight: 700 !important; letter-spacing: -0.02em; } /* heading tweak */
+  .logo, .footer-logo { font-family: 'Audiowide', cursive !important; letter-spacing: 0.02em; text-transform: uppercase; font-size: 2.1rem !important; } 
+  .footer-logo { font-size: 1.7rem !important; }
+</style>
+  <script src="/js/config.js"></script>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Scroll<span>ix</span></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <h1>Contact Us</h1>
+  <p>Guest posts, sponsorships, advertising, ya sirf koi sawaal — hum sunne ke liye yahan hain.</p>
+</div>
+
+<div class="container">
+  <div class="layout">
+
+    <!-- CONTACT FORM -->
+    <div>
+      <div class="card">
+        <h2>Send a Message</h2>
+        <p style="color:var(--muted);font-size:.85rem;margin-bottom:1.5rem">Hum typically 24–48 hours mein reply karte hain.</p>
+
+        <div style="margin-bottom:1.25rem">
+          <label>What is this about?</label>
+          <div class="type-grid">
+            <div class="type-item selected" onclick="selectType(this,'General Query')"><span class="ti">💬</span><span>General</span></div>
+            <div class="type-item" onclick="selectType(this,'Guest Post')"><span class="ti">✏️</span><span>Guest Post</span></div>
+            <div class="type-item" onclick="selectType(this,'Advertising')"><span class="ti">📢</span><span>Advertising</span></div>
+            <div class="type-item" onclick="selectType(this,'Sponsorship')"><span class="ti">🤝</span><span>Sponsorship</span></div>
+          </div>
+          <input type="hidden" id="contact-type" value="General Query">
+        </div>
+
+        <div class="form-group">
+          <label>Your Name *</label>
+          <input type="text" id="c-name" placeholder="Aapka naam...">
+        </div>
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" id="c-email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Subject *</label>
+          <input type="text" id="c-subject" placeholder="Briefly batao kya chahiye...">
+        </div>
+        <div class="form-group">
+          <label>Message *</label>
+          <textarea id="c-message" placeholder="Apna message yahan likhein... jitna detail de sako utna better."></textarea>
+        </div>
+        <button class="btn" onclick="submitForm()">Send Message</button>
+        <div class="success-msg" id="success-msg">
+          Shukriya! Aapka message mil gaya. Hum 24–48 hours mein reply karenge.
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR INFO -->
+    <div>
+      <div class="card">
+        <h2>Contact Info</h2>
+        <div class="contact-item">
+          <span class="c-icon">📧</span>
+          <div>
+            <div class="c-label">Email</div>
+            <div class="c-value"><a href="mailto:contact@scrollix.in">contact@scrollix.in</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="c-icon">🌐</span>
+          <div>
+            <div class="c-label">Website</div>
+            <div class="c-value"><a href="https://scrollix.in">scrollix.in</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="c-icon">📍</span>
+          <div>
+            <div class="c-label">Based In</div>
+            <div class="c-value">India</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="c-icon">⏱️</span>
+          <div>
+            <div class="c-label">Response Time</div>
+            <div class="c-value">Within 24–48 hours</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>We're Open To</h2>
+        <div class="contact-item">
+          <span class="c-icon">✏️</span>
+          <div>
+            <div class="c-label">Guest Posts</div>
+            <div class="c-value">Quality articles in Hinglish or English on our covered topics. Minimum 1000 words, original content only.</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="c-icon">📢</span>
+          <div>
+            <div class="c-label">Advertising</div>
+            <div class="c-value">Display ads, sponsored posts for brands relevant to our audience — tech, education, finance, apps.</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="c-icon">🤝</span>
+          <div>
+            <div class="c-label">Affiliates</div>
+            <div class="c-value">Products and services we genuinely believe in. We clearly disclose all affiliate relationships.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Scroll<span>ix</span></div>
+  <div><a href="/">Home</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a><a href="/contact.html">Contact</a></div>
+  <p style="margin-top:.75rem">© 2026 Scrollix. All rights reserved.</p>
+</footer>
+
+<script>
+function selectType(el, val){
+  document.querySelectorAll('.type-item').forEach(i=>i.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('contact-type').value=val;
+}
+function submitForm(){
+  const name=document.getElementById('c-name').value.trim();
+  const email=document.getElementById('c-email').value.trim();
+  const subject=document.getElementById('c-subject').value.trim();
+  const msg=document.getElementById('c-message').value.trim();
+  if(!name||!email||!subject||!msg){ alert('Please fill all required fields.'); return; }
+  if(!email.includes('@')){ alert('Please enter a valid email.'); return; }
+  // Opens mail client with pre-filled content
+  const mailBody = `Name: ${name}\nType: ${document.getElementById('contact-type').value}\n\nMessage:\n${msg}`;
+  window.location.href = `mailto:contact@scrollix.in?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailBody)}`;
+  document.getElementById('success-msg').style.display='block';
+}
+</script>
+</body>
+</html>

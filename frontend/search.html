@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Search â€” Scrollix</title>
+<meta name="robots" content="noindex, follow">
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0a0a0a;--cream:#f5f0e8;--accent:#e63329;--ink:#1a1a1a;--muted:#6b6b6b;--border:#e0dbd0;--card:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;background:var(--cream);color:var(--ink)}
+  nav{background:var(--black);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:1.8rem;color:white;text-decoration:none;padding:1rem 0}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;list-style:none}
+  .nav-links a{color:#aaa;text-decoration:none;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:1.4rem 1rem;display:block;transition:color .2s}
+  .nav-links a:hover{color:white}
+  .search-hero{background:var(--black);padding:2.5rem 2rem;text-align:center}
+  .search-box{display:flex;max-width:600px;margin:0 auto;gap:0}
+  .search-input{flex:1;padding:14px 18px;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:15px;background:#1a1a1a;border:1px solid #333;color:white;border-radius:4px 0 0 4px;outline:none}
+  .search-input:focus{border-color:var(--accent)}
+  .search-btn{background:var(--accent);color:white;border:none;padding:14px 24px;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:0 4px 4px 0}
+  .search-btn:hover{background:#c52820}
+  .container{max-width:1000px;margin:0 auto;padding:2.5rem 1.5rem}
+  .results-header{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:13px;color:var(--muted);margin-bottom:1.5rem}
+  .results-header strong{color:var(--ink)}
+  .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+  .card{background:var(--card);border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.08)}
+  .card img{width:100%;height:170px;object-fit:cover;display:block;background:#e8e3d8}
+  .card-body{padding:1.1rem}
+  .card-tag{display:inline-block;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+  .card-title{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:1rem;font-weight:700;line-height:1.35;color:var(--ink);margin-bottom:7px}
+  .card-excerpt{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+  .card-meta{display:flex;justify-content:space-between;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;color:var(--muted);border-top:1px solid var(--border);padding-top:9px}
+  .card-read{color:var(--accent);font-weight:600}
+  .empty-state{text-align:center;padding:4rem 2rem}
+  .empty-state h3{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:1.6rem;margin-bottom:.75rem}
+  .empty-state p{color:var(--muted);margin-bottom:1.5rem}
+  .load-more{display:block;width:100%;padding:13px;background:var(--ink);color:white;border:none;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;margin-top:2rem;border-radius:4px;transition:background .2s}
+  .load-more:hover{background:#333}
+  footer{background:var(--black);color:#555;padding:2rem 0;text-align:center;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;margin-top:3rem}
+  footer a{color:#555;text-decoration:none;margin:0 1rem}
+  .footer-logo{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:1.4rem;color:white;margin-bottom:.75rem}
+  .footer-logo span{color:var(--accent)}
+  @media(max-width:768px){.cards-grid{grid-template-columns:1fr 1fr}.nav-links{display:none}}
+  @media(max-width:480px){.cards-grid{grid-template-columns:1fr}}
+  h1, h2, h3, h4, .hero-title, .card-title, .viral-title, .popular-title, .side-title { font-weight: 700 !important; letter-spacing: -0.02em; } /* heading tweak */
+  .logo, .footer-logo { font-family: 'Audiowide', cursive !important; letter-spacing: 0.02em; text-transform: uppercase; font-size: 2.1rem !important; } 
+  .footer-logo { font-size: 1.7rem !important; }
+</style>
+  <script src="/js/config.js"></script>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Scroll<span>ix</span></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/category/viral-news">Viral News</a></li>
+    <li><a href="/category/student-life">Student Life</a></li>
+    <li><a href="/category/ai-tools">AI & Tools</a></li>
+    <li><a href="/category/make-money-online">Make Money</a></li>
+  </ul>
+</nav>
+
+<div class="search-hero">
+  <div class="search-box">
+    <input type="search" class="search-input" id="search-input" placeholder="Search articles..." onkeydown="if(event.key==='Enter')doSearch()">
+    <button class="search-btn" onclick="doSearch()">Search</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="results-header" id="results-header"></div>
+  <div class="cards-grid" id="results-grid"></div>
+  <button class="load-more" id="load-more" onclick="loadMore()" style="display:none">Load More Results</button>
+</div>
+
+<footer>
+  <div class="footer-logo">Scroll<span>ix</span></div>
+  <div><a href="/">Home</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/contact.html">Contact</a></div>
+  <p style="margin-top:.75rem">Â© 2026 Scrollix. All rights reserved.</p>
+</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+let query = params.get('q')||'';
+let offset = 0; const limit = 9; let total = 0;
+
+function timeAgo(d){const diff=Date.now()-new Date(d);const days=Math.floor(diff/86400000);if(days>0)return days+'d ago';const hrs=Math.floor(diff/3600000);if(hrs>0)return hrs+'h ago';return Math.floor(diff/60000)+'m ago';}
+
+function cardHTML(p){return `<div class="card" onclick="window.location='/blog/${p.slug}'">
+  <img src="${p.thumbnail||'images/placeholder.jpg'}" alt="${p.title}" loading="lazy">
+  <div class="card-body">
+    <span class="card-tag">${p.category_name||'General'}</span>
+    <h3 class="card-title">${p.title}</h3>
+    <p class="card-excerpt">${p.excerpt||''}</p>
+    <div class="card-meta"><span>${timeAgo(p.created_at)}</span><span class="card-read">Read â†’</span></div>
+  </div></div>`;}
+
+async function doSearch(append=false){
+  if(!query) return;
+  document.getElementById('page-title').textContent = `"${query}" â€” Scrollix Search`;
+  document.getElementById('search-input').value = query;
+  try{
+    const res = await fetch(API_BASE_URL + `/api/posts?search=${encodeURIComponent(query)}&limit=${limit}&offset=${offset}`);
+    const {posts, total:t} = await res.json();
+    total = t;
+    const grid = document.getElementById('results-grid');
+    if(!append) grid.innerHTML='';
+    if(posts.length===0&&!append){
+      grid.innerHTML=`<div style="grid-column:1/-1" class="empty-state">
+        <h3>Koi results nahi mila</h3>
+        <p>"${query}" ke liye koi article nahi mila. Doosra keyword try karo.</p>
+        <a href="/" style="color:var(--accent)">â† Back to Home</a>
+      </div>`;
+      document.getElementById('results-header').innerHTML='';
+    } else {
+      posts.forEach(p=>grid.innerHTML+=cardHTML(p));
+      document.getElementById('results-header').innerHTML=`<strong>${total}</strong> results found for "<strong>${query}</strong>"`;
+    }
+    offset += posts.length;
+    document.getElementById('load-more').style.display = offset<total?'block':'none';
+  }catch(e){ console.error(e); }
+}
+
+function loadMore(){
+  const btn=document.getElementById('load-more');
+  btn.textContent='Loading...'; btn.disabled=true;
+  doSearch(true).then(()=>{btn.textContent='Load More Results';btn.disabled=false;});
+}
+
+function updateQuery(){
+  query=document.getElementById('search-input').value.trim();
+  offset=0;
+  window.history.pushState({},'','/search?q='+encodeURIComponent(query));
+  doSearch();
+}
+document.getElementById('search-input').addEventListener('input', ()=>{ clearTimeout(window._st); window._st=setTimeout(updateQuery,400); });
+
+if(query) doSearch();
+else document.getElementById('results-header').innerHTML='Type something to search...';
+</script>
+</body>
+</html>

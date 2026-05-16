@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Category — Scrollix</title>
+<meta name="description" id="meta-desc" content="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0a0a0a;--cream:#f5f0e8;--accent:#e63329;--ink:#1a1a1a;--muted:#6b6b6b;--border:#e0dbd0;--card-bg:#ffffff;--nav-bg:#0a0a0a}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;background:var(--cream);color:var(--ink)}
+  nav{background:var(--nav-bg);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:1.8rem;color:white;text-decoration:none;padding:1rem 0}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;list-style:none}
+  .nav-links a{color:#aaa;text-decoration:none;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:1.4rem 1rem;display:block;transition:color .2s;border-bottom:2px solid transparent}
+  .nav-links a:hover{color:white;border-bottom-color:var(--accent)}
+  .container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+  .cat-hero{background:var(--black);color:white;padding:3rem 0;margin-bottom:2rem;text-align:center}
+  .cat-hero-tag{display:inline-block;background:var(--accent);font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;margin-bottom:12px}
+  .cat-hero-title{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:2.5rem;font-weight:900;margin-bottom:.5rem}
+  .cat-hero-count{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;color:#666}
+  .page-layout{display:grid;grid-template-columns:1fr 300px;gap:2.5rem;padding-bottom:3rem}
+  .section-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:2px solid var(--ink)}
+  .section-title{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase}
+  .section-line{flex:1;height:1px;background:var(--border)}
+  .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2rem}
+  .card{background:var(--card-bg);border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.1)}
+  .card img{width:100%;height:180px;object-fit:cover;display:block;background:#e8e3d8}
+  .card-body{padding:1.2rem}
+  .card-tag{display:inline-block;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--accent)}
+  .card-title{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:1.05rem;font-weight:700;line-height:1.35;color:var(--ink);margin-bottom:8px}
+  .card-excerpt{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+  .card-meta{display:flex;justify-content:space-between;align-items:center;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px}
+  .card-read{color:var(--accent);font-weight:600}
+  .load-more{display:block;width:100%;padding:14px;background:var(--ink);color:white;border:none;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;margin-bottom:2rem;transition:background .2s}
+  .load-more:hover{background:#333}
+  .load-more:disabled{background:#999;cursor:not-allowed}
+  .sidebar-widget{background:var(--card-bg);border:1px solid var(--border);margin-bottom:2rem}
+  .widget-header{background:var(--ink);color:white;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 16px}
+  .widget-body{padding:1rem}
+  .popular-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer}
+  .popular-item:last-child{border-bottom:none}
+  .popular-num{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:1.6rem;font-weight:700;color:var(--border);line-height:1;min-width:28px}
+  .popular-title{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:.88rem;line-height:1.4;color:var(--ink);font-weight:700}
+  .popular-meta{font-size:11px;color:var(--muted);font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;margin-top:4px}
+  .cat-list-widget a{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink);text-decoration:none;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;font-weight:600}
+  .cat-list-widget a:hover{color:var(--accent)}
+  .cat-count{color:var(--muted);font-weight:400}
+  footer{background:var(--black);color:white;padding:2rem 0;margin-top:3rem;text-align:center;font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:12px;color:#555}
+  footer a{color:#555;text-decoration:none;margin:0 1rem}
+  footer a:hover{color:white}
+  .footer-logo{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-weight:800;font-size:1.4rem;color:white;margin-bottom:.75rem}
+  .footer-logo span{color:var(--accent)}
+  .empty-state{text-align:center;padding:4rem 2rem;color:var(--muted)}
+  .empty-state h3{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;font-size:1.5rem;margin-bottom:.5rem;color:var(--ink)}
+  @media(max-width:768px){.page-layout{grid-template-columns:1fr}.cards-grid{grid-template-columns:1fr 1fr}.nav-links{display:none}}
+  @media(max-width:480px){.cards-grid{grid-template-columns:1fr}}
+  h1, h2, h3, h4, .hero-title, .card-title, .viral-title, .popular-title, .side-title { font-weight: 700 !important; letter-spacing: -0.02em; } /* heading tweak */
+  .logo, .footer-logo { font-family: 'Audiowide', cursive !important; letter-spacing: 0.02em; text-transform: uppercase; font-size: 2.1rem !important; } 
+  .footer-logo { font-size: 1.7rem !important; }
+</style>
+  <script src="/js/config.js"></script>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">Scroll<span>ix</span></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/category/viral-news">Viral News</a></li>
+    <li><a href="/category/student-life">Student Life</a></li>
+    <li><a href="/category/ai-tools">AI & Tools</a></li>
+    <li><a href="/category/make-money-online">Make Money</a></li>
+    <li><a href="/category/tech-gadgets">Tech</a></li>
+  </ul>
+</nav>
+
+<div class="cat-hero">
+  <div class="cat-hero-tag" id="cat-tag">Category</div>
+  <h1 class="cat-hero-title" id="cat-title">Loading...</h1>
+  <div class="cat-hero-count" id="cat-count"></div>
+</div>
+
+<div class="container">
+  <!-- AD SLOT: Category Page Banner -->
+  <div style="height:90px;margin-bottom:1.5rem;"></div>
+
+  <div class="page-layout">
+    <main>
+      <div class="section-header">
+        <span class="section-title" id="section-title">All Articles</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards-grid" id="posts-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted)">Loading...</div>
+      </div>
+      <button class="load-more" id="load-more-btn" onclick="loadMore()" style="display:none">Load More Articles</button>
+    </main>
+
+    <aside>
+      <!-- AD SLOT: Sidebar 300x250 -->
+      <div style="width:300px;min-height:250px;margin-bottom:1.5rem;"></div>
+
+      <div class="sidebar-widget">
+        <div class="widget-header">Most Read</div>
+        <div class="widget-body" id="popular-sidebar"></div>
+      </div>
+
+      <div class="sidebar-widget">
+        <div class="widget-header">All Categories</div>
+        <div class="widget-body cat-list-widget" id="cats-list"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Scroll<span>ix</span></div>
+  <div><a href="/">Home</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a></div>
+  <p style="margin-top:.75rem">© 2026 Scrollix. All rights reserved.</p>
+</footer>
+
+<script>
+const catSlug = window.location.pathname.replace('/category/','').replace(/\/$/,'');
+let offset = 0; const limit = 9; let total = 0;
+
+function timeAgo(d){const diff=Date.now()-new Date(d);const days=Math.floor(diff/86400000);if(days>0)return days+'d ago';const hrs=Math.floor(diff/3600000);if(hrs>0)return hrs+'h ago';return Math.floor(diff/60000)+'m ago';}
+
+function cardHTML(p){return `<div class="card" onclick="window.location='/blog/${p.slug}'">
+  <img src="${p.thumbnail||'images/placeholder.jpg'}" alt="${p.title}" loading="lazy">
+  <div class="card-body">
+    <span class="card-tag">${p.category_name||'General'}</span>
+    <h2 class="card-title">${p.title}</h2>
+    <p class="card-excerpt">${p.excerpt||''}</p>
+    <div class="card-meta"><span>${timeAgo(p.created_at)}</span><span class="card-read">Read →</span></div>
+  </div></div>`;}
+
+async function loadPosts(append=false){
+  try {
+    const res = await fetch(API_BASE_URL + `/api/posts?category=${catSlug}&limit=${limit}&offset=${offset}`);
+    const {posts, total:t} = await res.json();
+    total = t;
+    const grid = document.getElementById('posts-grid');
+    if(!append) grid.innerHTML = '';
+    if(posts.length === 0 && !append){
+      grid.innerHTML = '<div style="grid-column:1/-1"><div class="empty-state"><h3>No articles yet</h3><p>Check back soon for fresh content in this category.</p></div></div>';
+    } else {
+      posts.forEach(p => grid.innerHTML += cardHTML(p));
+    }
+    offset += posts.length;
+    const btn = document.getElementById('load-more-btn');
+    btn.style.display = offset < total ? 'block' : 'none';
+  } catch(e){ console.error(e); }
+}
+
+function loadMore(){
+  const btn = document.getElementById('load-more-btn');
+  btn.textContent = 'Loading...'; btn.disabled = true;
+  loadPosts(true).then(()=>{ btn.textContent='Load More Articles'; btn.disabled=false; });
+}
+
+async function loadCategoryInfo(){
+  try {
+    const res = await fetch(API_BASE_URL + '/api/categories');
+    const cats = await res.json();
+    const cat = cats.find(c=>c.slug===catSlug);
+    if(cat){
+      document.getElementById('cat-tag').textContent = cat.name;
+      document.getElementById('cat-title').textContent = cat.name;
+      document.getElementById('page-title').textContent = cat.name+' — Scrollix';
+      document.getElementById('section-title').textContent = cat.name+' Articles';
+      document.getElementById('cat-count').textContent = cat.post_count+' articles';
+    }
+    document.getElementById('cats-list').innerHTML = cats.map(c=>
+      `<a href="/category/${c.slug}">${c.name}<span class="cat-count">${c.post_count}</span></a>`
+    ).join('');
+  } catch(e){}
+}
+
+async function loadPopular(){
+  try {
+    const res = await fetch(API_BASE_URL + '/api/posts?popular=1&limit=5');
+    const {posts} = await res.json();
+    document.getElementById('popular-sidebar').innerHTML = posts.map((p,i)=>`
+      <div class="popular-item" onclick="window.location='/blog/${p.slug}'">
+        <span class="popular-num">0${i+1}</span>
+        <div><div class="popular-title">${p.title}</div>
+        <div class="popular-meta">${p.views} views</div></div>
+      </div>`).join('');
+  } catch(e){}
+}
+
+fetch(API_BASE_URL + '/api/analytics/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:window.location.pathname})}).catch(()=>{});
+
+loadCategoryInfo();
+loadPosts();
+loadPopular();
+</script>
+</body>
+</html>
