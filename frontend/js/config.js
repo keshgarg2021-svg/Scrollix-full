@@ -6,8 +6,7 @@
 // and replace with your actual Render URL.
 // ----------------------------------------------------
 
-let API_BASE_URL = "";
-// API_BASE_URL = "https://your-backend-app.onrender.com";
+let API_BASE_URL = "https://scrollix-full.onrender.com";
 
 // Helper function to resolve image URLs from the backend
 function getImageUrl(url) {
