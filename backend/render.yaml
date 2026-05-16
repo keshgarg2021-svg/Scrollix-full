@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: scrollix-backend
+    env: node
+    region: singapore
+    plan: starter
+
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_PATH
+        value: /data/scrollix.db
+      - key: UPLOADS_PATH
+        value: /data/uploads
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: BASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+    disk:
+      name: scrollix-data
+      mountPath: /data
+      sizeGB: 1
