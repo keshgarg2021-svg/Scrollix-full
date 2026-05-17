@@ -164,7 +164,7 @@ textarea.form-control{resize:vertical;min-height:90px}
   <div class="login-box">
     <div class="login-logo">Scroll<span>ix</span><br><small style="font-size:11px;color:var(--muted);letter-spacing:.1em">ADMIN PANEL</small></div>
     <div class="form-group"><label>Username</label><input type="text" class="form-control" id="login-user" placeholder="admin" onkeydown="if(event.key==='Enter')doLogin()"></div>
-    <div class="form-group"><label>Password</label><input type="password" class="form-control" id="login-pass" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="form-group"><label>Password</label><input type="password" class="form-control" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div class="error-msg" id="login-err">Invalid username or password</div>
     <button class="btn btn-primary btn-full" style="margin-top:1rem" onclick="doLogin()">Login</button>
   </div>
@@ -180,18 +180,18 @@ textarea.form-control{resize:vertical;min-height:90px}
     <nav>
       <div class="nav-section">
         <div class="nav-label">Overview</div>
-        <div class="nav-item active" onclick="go('dashboard')">ðŸ“Š Dashboard</div>
+        <div class="nav-item active" onclick="go('dashboard')">📊 Dashboard</div>
       </div>
       <div class="nav-section">
         <div class="nav-label">Content</div>
-        <div class="nav-item" onclick="go('posts')">ðŸ“ All Posts</div>
-        <div class="nav-item" onclick="go('new-post')">âœï¸ New Post</div>
-        <div class="nav-item" onclick="go('categories')">ðŸ·ï¸ Categories</div>
+        <div class="nav-item" onclick="go('posts')">📝 All Posts</div>
+        <div class="nav-item" onclick="go('new-post')">✏️ New Post</div>
+        <div class="nav-item" onclick="go('categories')">🏷️ Categories</div>
       </div>
       <div class="nav-section">
         <div class="nav-label">Site</div>
-        <div class="nav-item" onclick="window.open('/')">ðŸŒ View Site</div>
-        <div class="nav-item" onclick="go('settings')">âš™ï¸ Settings</div>
+        <div class="nav-item" onclick="window.open('/')">🌐 View Site</div>
+        <div class="nav-item" onclick="go('settings')">⚙️ Settings</div>
       </div>
     </nav>
     <div class="sidebar-bottom">
@@ -204,7 +204,7 @@ textarea.form-control{resize:vertical;min-height:90px}
     <div class="topbar">
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div style="display:flex;align-items:center;gap:12px;">
-        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode" style="font-size:16px;">ðŸŒ™</button>
+        <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode" style="font-size:16px;">🌙</button>
         <div class="topbar-actions" id="topbar-actions"></div>
       </div>
     </div>
@@ -215,12 +215,12 @@ textarea.form-control{resize:vertical;min-height:90px}
 <div class="toast" id="toast"></div>
 
 <script>
-// â”€â”€ THEME â”€â”€
+// ── THEME ──
 function initTheme() {
   if (localStorage.getItem('sx_theme') === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
     const btn = document.getElementById('theme-toggle');
-    if(btn) btn.textContent = 'â˜€ï¸';
+    if(btn) btn.textContent = '☀️';
   }
 }
 initTheme();
@@ -230,18 +230,18 @@ function toggleTheme() {
   if (isDark) {
     document.documentElement.removeAttribute('data-theme');
     localStorage.setItem('sx_theme', 'light');
-    if(btn) btn.textContent = 'ðŸŒ™';
+    if(btn) btn.textContent = '🌙';
   } else {
     document.documentElement.setAttribute('data-theme', 'dark');
     localStorage.setItem('sx_theme', 'dark');
-    if(btn) btn.textContent = 'â˜€ï¸';
+    if(btn) btn.textContent = '☀️';
   }
 }
 
 let TOKEN = localStorage.getItem('sx_token');
 let editPost = null, editCat = null, cats = [];
 
-// â”€â”€ AUTH â”€â”€
+// ── AUTH ──
 async function doLogin(){
   const u=document.getElementById('login-user').value.trim();
   const p=document.getElementById('login-pass').value.trim();
@@ -260,10 +260,10 @@ async function doLogin(){
 function logout(){ localStorage.removeItem('sx_token'); TOKEN=null; document.getElementById('admin-app').classList.add('hidden'); document.getElementById('login-page').classList.remove('hidden'); }
 function H(){ return {'Authorization':'Bearer '+TOKEN,'Content-Type':'application/json'}; }
 
-// â”€â”€ TOAST â”€â”€
+// ── TOAST ──
 function toast(msg,type='ok'){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast '+(type==='err'?'err':'')+' show'; setTimeout(()=>t.classList.remove('show'),3000); }
 
-// â”€â”€ NAV â”€â”€
+// ── NAV ──
 function go(page){
   document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
   const map={'dashboard':0,'posts':1,'new-post':2,'categories':3,'settings':5};
@@ -272,17 +272,17 @@ function go(page){
   document.getElementById('topbar-title').textContent=titles[page]||'';
   const acts={'posts':'<button class="btn btn-primary" onclick="go(\'new-post\')">+ New Post</button>',
               'categories':'<button class="btn btn-success" onclick="openCatModal()">+ Category</button>',
-              'dashboard':'<button class="btn btn-ghost" onclick="loadDash()">â†» Refresh</button>'};
+              'dashboard':'<button class="btn btn-ghost" onclick="loadDash()">↻ Refresh</button>'};
   document.getElementById('topbar-actions').innerHTML=acts[page]||'';
   ({dashboard:renderDash,posts:renderPosts,'new-post':()=>renderEditor(null),categories:renderCats,settings:renderSettings})[page]?.();
 }
 
-// â”€â”€ DASHBOARD â”€â”€
+// ── DASHBOARD ──
 function renderDash(){
   document.getElementById('content-area').innerHTML=`
     <div class="stats-grid" id="stats-grid"><div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted)">Loading...</div></div>
     <div class="charts-grid">
-      <div class="chart-card"><div class="chart-title">Views â€” Last 7 Days</div><div class="bar-chart" id="views-chart" style="align-items:center;justify-content:center"><span style="color:var(--muted);font-size:13px">Loading...</span></div></div>
+      <div class="chart-card"><div class="chart-title">Views — Last 7 Days</div><div class="bar-chart" id="views-chart" style="align-items:center;justify-content:center"><span style="color:var(--muted);font-size:13px">Loading...</span></div></div>
       <div class="chart-card"><div class="chart-title">Posts by Category</div><div class="donut-wrap" id="cat-chart"></div></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
@@ -300,9 +300,9 @@ async function loadDash(){
     const r=await fetch(API_BASE_URL + '/api/analytics/dashboard',{headers:H()});
     const d=await r.json();
     const {stats,weeklyViews,topPosts,recentPosts,categoryBreakdown}=d;
-    const defs=[{k:'totalPosts',l:'Total Posts',c:'red',i:'ðŸ“'},{k:'publishedPosts',l:'Published',c:'green',i:'âœ…'},
-                {k:'draftPosts',l:'Drafts',c:'blue',i:'ðŸ“‹'},{k:'totalCategories',l:'Categories',c:'orange',i:'ðŸ·ï¸'},
-                {k:'totalViews',l:'Total Views',c:'red',i:'ðŸ‘'},{k:'todayViews',l:'Today',c:'green',i:'ðŸ“ˆ'}];
+    const defs=[{k:'totalPosts',l:'Total Posts',c:'red',i:'📝'},{k:'publishedPosts',l:'Published',c:'green',i:'✅'},
+                {k:'draftPosts',l:'Drafts',c:'blue',i:'📋'},{k:'totalCategories',l:'Categories',c:'orange',i:'🏷️'},
+                {k:'totalViews',l:'Total Views',c:'red',i:'👁'},{k:'todayViews',l:'Today',c:'green',i:'📈'}];
     document.getElementById('stats-grid').innerHTML=defs.map(s=>`
       <div class="stat-card ${s.c}"><div class="stat-icon">${s.i}</div>
       <div class="stat-value">${(stats[s.k]||0).toLocaleString()}</div>
@@ -316,7 +316,7 @@ async function loadDash(){
       <span>${c.name}</span><span class="donut-count">${c.post_count}</span></div>`).join('');
     document.getElementById('top-posts').innerHTML=topPosts.map((p,i)=>`
       <div class="top-post-item"><span class="top-rank">${i+1}</span>
-      <div class="top-info"><div class="top-title">${p.title}</div><div class="top-meta">${p.category_name||'â€”'}</div></div>
+      <div class="top-info"><div class="top-title">${p.title}</div><div class="top-meta">${p.category_name||'—'}</div></div>
       <span class="top-views">${(p.views||0).toLocaleString()}</span></div>`).join('');
     document.getElementById('recent-tb').innerHTML=recentPosts.map(p=>`
       <tr><td class="truncate">${p.title}</td>
@@ -325,7 +325,7 @@ async function loadDash(){
   }catch(e){ toast('Dashboard load failed','err'); }
 }
 
-// â”€â”€ POSTS LIST â”€â”€
+// ── POSTS LIST ──
 let dt; function debounce(fn){ clearTimeout(dt); dt=setTimeout(fn,300); }
 let currentPage = 1;
 const postsPerPage = 10;
@@ -374,7 +374,7 @@ async function fetchPosts(){
       <tr>
         <td><img src="${getImageUrl(p.thumbnail)||'images/placeholder.jpg'}" class="post-thumb" loading="lazy"></td>
         <td><div class="truncate" title="${p.title}">${p.title}</div></td>
-        <td style="font-size:12px;color:var(--muted)">${p.category_name||'â€”'}</td>
+        <td style="font-size:12px;color:var(--muted)">${p.category_name||'—'}</td>
         <td><span class="badge ${p.youtube_url?'badge-yes':'badge-no'}">${p.youtube_url?'Yes':'No'}</span></td>
         <td><span class="badge ${p.show_homepage?'badge-yes':'badge-no'}">${p.show_homepage?'Yes':'No'}</span></td>
         <td><span class="badge ${p.is_popular?'badge-yes':'badge-no'}">${p.is_popular?'Yes':'No'}</span></td>
@@ -382,9 +382,9 @@ async function fetchPosts(){
         <td style="font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-size:12px;font-weight:700">${p.views||0}</td>
         <td style="font-size:11px;color:var(--muted)">${(p.created_at||'').slice(0,10)}</td>
         <td><div class="actions-cell">
-          <button class="icon-btn" onclick="loadAndEdit(${p.id})" title="Edit">âœï¸</button>
-          <button class="icon-btn" onclick="window.open('/blog/${p.slug}')" title="View">ðŸ‘</button>
-          <button class="icon-btn danger" data-id="${p.id}" data-title="${esc(p.title)}" onclick="handleDelPost(this)" title="Delete">ðŸ—‘ï¸</button>
+          <button class="icon-btn" onclick="loadAndEdit(${p.id})" title="Edit">✏️</button>
+          <button class="icon-btn" onclick="window.open('/blog/${p.slug}')" title="View">👁</button>
+          <button class="icon-btn danger" data-id="${p.id}" data-title="${esc(p.title)}" onclick="handleDelPost(this)" title="Delete">🗑️</button>
         </div></td>
       </tr>`).join(''):'<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--muted)">No posts found</td></tr>';
     const info = document.getElementById('posts-info');
@@ -405,7 +405,7 @@ async function fetchPosts(){
   }catch(e){ toast('Failed to load posts','err'); }
 }
 
-// â”€â”€ EDITOR â”€â”€
+// ── EDITOR ──
 async function renderEditor(postData){
   editPost=postData;
   if(!cats.length){ try{ const r=await fetch(API_BASE_URL + '/api/categories'); cats=await r.json(); }catch(e){} }
@@ -417,13 +417,13 @@ async function renderEditor(postData){
     <div class="table-card">
       <div class="table-header">
         <span class="table-title">${p.id?'Edit Post':'New Post'}</span>
-        <button class="btn btn-ghost" onclick="go('posts')">â† Back</button>
+        <button class="btn btn-ghost" onclick="go('posts')">← Back</button>
       </div>
       <div style="padding:1.5rem">
 
         <!-- TITLE + SLUG -->
         <div class="form-group">
-          <label>Title * <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(50â€“60 chars recommended for SEO)</span></label>
+          <label>Title * <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(50–60 chars recommended for SEO)</span></label>
           <input type="text" class="form-control" id="p-title" value="${esc(p.title||'')}" placeholder="Write a compelling, keyword-rich title..." oninput="cc('p-title','tc',60)">
           <div class="char-count"><span id="tc">${(p.title||'').length}</span>/60</div>
         </div>
@@ -447,7 +447,7 @@ async function renderEditor(postData){
 
         <!-- EXCERPT -->
         <div class="form-group">
-          <label>Excerpt <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(shown on cards â€” 150â€“160 chars)</span></label>
+          <label>Excerpt <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(shown on cards — 150–160 chars)</span></label>
           <textarea class="form-control" id="p-excerpt" rows="2" placeholder="Short description that appears on blog cards and search results..." oninput="cc('p-excerpt','ec',160)">${esc(p.excerpt||'')}</textarea>
           <div class="char-count"><span id="ec">${(p.excerpt||'').length}</span>/160</div>
         </div>
@@ -462,10 +462,10 @@ async function renderEditor(postData){
               <button class="tb" onclick="fmt('underline')"><u>U</u></button>
               <button class="tb" onclick="fmtB('h2')">H2</button>
               <button class="tb" onclick="fmtB('h3')">H3</button>
-              <button class="tb" onclick="fmt('insertUnorderedList')">â€¢ List</button>
+              <button class="tb" onclick="fmt('insertUnorderedList')">• List</button>
               <button class="tb" onclick="fmt('insertOrderedList')">1. List</button>
               <button class="tb" onclick="fmtB('blockquote')">Quote</button>
-              <button class="tb" onclick="insLink()">ðŸ”— Link</button>
+              <button class="tb" onclick="insLink()">🔗 Link</button>
               <button class="tb" onclick="insTable()">Table</button>
             </div>
             <div class="editor-content" id="p-content" contenteditable="true">${p.content||''}</div>
@@ -489,22 +489,22 @@ async function renderEditor(postData){
           <label>Homepage Position <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(Kaahan dikhana hai is post ko?)</span></label>
           <div class="pos-grid" id="pos-grid">
             <div class="pos-item ${(!p.featured_position||p.featured_position==='none')?'selected':''}" onclick="setPos('none')">
-              <div class="pos-icon">ðŸ“‹</div>
+              <div class="pos-icon">📋</div>
               <div class="pos-label">Normal Card</div>
               <div class="pos-desc">Regular 3-col grid mein</div>
             </div>
             <div class="pos-item ${p.featured_position==='hero'?'selected':''}" onclick="setPos('hero')">
-              <div class="pos-icon">ðŸŽ¯</div>
+              <div class="pos-icon">🎯</div>
               <div class="pos-label">Hero Section</div>
-              <div class="pos-desc">Sabse upar â€” main big post</div>
+              <div class="pos-desc">Sabse upar — main big post</div>
             </div>
             <div class="pos-item ${p.featured_position==='wide'?'selected':''}" onclick="setPos('wide')">
-              <div class="pos-icon">ðŸ“°</div>
+              <div class="pos-icon">📰</div>
               <div class="pos-label">Featured Wide</div>
               <div class="pos-desc">Full-width featured card</div>
             </div>
             <div class="pos-item ${p.featured_position==='sidebar'?'selected':''}" onclick="setPos('sidebar')">
-              <div class="pos-icon">ðŸ“Œ</div>
+              <div class="pos-icon">📌</div>
               <div class="pos-label">Hero Sidebar</div>
               <div class="pos-desc">Hero ke right side mein</div>
             </div>
@@ -520,7 +520,7 @@ async function renderEditor(postData){
             <img id="thumb-prev" class="img-preview" src="${getImageUrl(p.thumbnail)||''}" style="${p.thumbnail?'display:block':''}">
           </div>
           <div class="form-group">
-            <label>OG / Social Share Image <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(1200Ã—630px)</span></label>
+            <label>OG / Social Share Image <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(1200×630px)</span></label>
             <input type="file" class="form-control" id="p-og" accept="image/*" onchange="prevImg(this,'og-prev')">
             <img id="og-prev" class="img-preview" src="${getImageUrl(p.og_image)||''}" style="${p.og_image?'display:block':''}">
           </div>
@@ -529,11 +529,11 @@ async function renderEditor(postData){
         <hr class="section-divider">
 
         <!-- YOUTUBE VIDEO -->
-        <div class="section-label">YouTube Video (Optional â€” for gadget review posts)</div>
+        <div class="section-label">YouTube Video (Optional — for gadget review posts)</div>
         <div class="form-group">
           <label>YouTube Video URL</label>
           <input type="url" class="form-control" id="p-yt" value="${esc(p.youtube_url||'')}" placeholder="https://www.youtube.com/watch?v=... or youtu.be/..." oninput="prevYT()">
-          <div class="form-hint">Paste your YouTube video link â€” it will auto-embed on the blog post page.</div>
+          <div class="form-hint">Paste your YouTube video link — it will auto-embed on the blog post page.</div>
           <div class="yt-preview" id="yt-preview">
             <iframe id="yt-prev-frame" src="" allowfullscreen></iframe>
           </div>
@@ -558,12 +558,12 @@ async function renderEditor(postData){
           <input type="text" class="form-control" id="p-kw" value="${esc(p.focus_keyword||'')}" placeholder="e.g. best phones under 15000">
         </div>
         <div class="form-group">
-          <label>SEO Title <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(50â€“60 chars)</span></label>
+          <label>SEO Title <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(50–60 chars)</span></label>
           <input type="text" class="form-control" id="p-seo-t" value="${esc(p.seo_title||p.title||'')}" placeholder="SEO-optimized title..." oninput="cc('p-seo-t','stc',60)">
           <div class="char-count"><span id="stc">${(p.seo_title||p.title||'').length}</span>/60</div>
         </div>
         <div class="form-group">
-          <label>SEO Description <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(150â€“160 chars)</span></label>
+          <label>SEO Description <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">(150–160 chars)</span></label>
           <textarea class="form-control" id="p-seo-d" rows="2" placeholder="Meta description for Google search results..." oninput="cc('p-seo-d','sdc',160)">${esc(p.seo_description||'')}</textarea>
           <div class="char-count"><span id="sdc">${(p.seo_description||'').length}</span>/160</div>
         </div>
@@ -595,12 +595,12 @@ let affCount=0;
 function affItemHTML(pr={},idx){
   const i=idx!==undefined?idx:affCount++;
   return `<div class="aff-item" id="aff-${i}">
-    <button class="aff-remove" onclick="document.getElementById('aff-${i}').remove()">âœ•</button>
+    <button class="aff-remove" onclick="document.getElementById('aff-${i}').remove()">✕</button>
     <div class="aff-item-row">
       <div class="form-group" style="margin:0"><label>Product Name *</label>
         <input type="text" class="form-control aff-name" value="${esc(pr.name||'')}" placeholder="e.g. iPhone 16 128GB"></div>
       <div class="form-group" style="margin:0"><label>Price</label>
-        <input type="text" class="form-control aff-price" value="${esc(pr.price||'')}" placeholder="e.g. â‚¹79,900"></div>
+        <input type="text" class="form-control aff-price" value="${esc(pr.price||'')}" placeholder="e.g. ₹79,900"></div>
     </div>
     <div class="form-group" style="margin-bottom:.75rem"><label>Affiliate Buy Link *</label>
       <input type="url" class="form-control aff-link" value="${esc(pr.link||'')}" placeholder="https://amzn.to/... or Flipkart link..."></div>
@@ -684,7 +684,7 @@ async function savePost(forceStatus){
   if(thumb) fd.append('thumbnail',thumb);
   if(og) fd.append('og_image',og);
   try{
-    const url=editPost?.id?`/api/posts/admin/${editPost.id}`:'/api/posts/admin/create';
+    const url=editPost?.id?API_BASE_URL+`/api/posts/admin/${editPost.id}`:API_BASE_URL+'/api/posts/admin/create';
     const method=editPost?.id?'PUT':'POST';
     const r=await fetch(url,{method,headers:{'Authorization':'Bearer '+TOKEN},body:fd});
     const d=await r.json();
@@ -720,7 +720,7 @@ async function delPost(id, title){
   }catch(e){ toast(e.message || 'Delete failed', 'err'); }
 }
 
-// â”€â”€ CATEGORIES â”€â”€
+// ── CATEGORIES ──
 function renderCats(){
   document.getElementById('content-area').innerHTML=`
     <div class="table-card">
@@ -730,7 +730,7 @@ function renderCats(){
     </div>
     <div class="modal-overlay hidden" id="cat-modal">
       <div class="modal">
-        <div class="modal-header"><span class="modal-title" id="cat-modal-t">New Category</span><button class="modal-close" onclick="closeCat()">Ã—</button></div>
+        <div class="modal-header"><span class="modal-title" id="cat-modal-t">New Category</span><button class="modal-close" onclick="closeCat()">×</button></div>
         <div class="modal-body">
           <div class="form-group"><label>Name *</label><input type="text" class="form-control" id="cat-name" placeholder="e.g. Student Life"></div>
           <div class="form-group"><label>Status</label><select class="form-control" id="cat-st"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
@@ -751,8 +751,8 @@ async function fetchCats(){
       <td style="font-family:'Anton', sans-serif; letter-spacing: 0.03em;font-weight:700">${c.post_count}</td>
       <td><span class="badge badge-${c.status==='active'?'active':'draft'}">${c.status}</span></td>
       <td><div class="actions-cell">
-        <button class="icon-btn" onclick='openCatModal(${JSON.stringify(c).replace(/"/g,"&quot;")})'>âœï¸</button>
-        <button class="icon-btn danger" onclick="delCat(${c.id},'${c.name.replace(/'/g,"\\'")}',${c.post_count})">ðŸ—‘ï¸</button>
+        <button class="icon-btn" onclick='openCatModal(${JSON.stringify(c).replace(/"/g,"&quot;")})'>✏️</button>
+        <button class="icon-btn danger" onclick="delCat(${c.id},'${c.name.replace(/'/g,"\\'")}',${c.post_count})">🗑️</button>
       </div></td></tr>`).join('');
   }catch(e){ toast('Failed','err'); }
 }
@@ -771,7 +771,7 @@ async function saveCat(){
   if(!name){ toast('Name required','err'); return; }
   const status=document.getElementById('cat-st').value;
   try{
-    const url=editCat?`/api/categories/admin/${editCat.id}`:'/api/categories/admin/create';
+    const url=editCat?API_BASE_URL+`/api/categories/admin/${editCat.id}`:API_BASE_URL+'/api/categories/admin/create';
     const r=await fetch(url,{method:editCat?'PUT':'POST',headers:H(),body:JSON.stringify({name,status})});
     const d=await r.json();
     if(!r.ok) throw new Error(d.error);
@@ -790,7 +790,7 @@ async function delCat(id,name,count){
   }catch(e){ toast(e.message,'err'); }
 }
 
-// â”€â”€ SETTINGS â”€â”€
+// ── SETTINGS ──
 function renderSettings(){
   document.getElementById('content-area').innerHTML=`
     <div class="table-card" style="max-width:480px">
@@ -819,10 +819,10 @@ async function changePass(){
   }catch(e){ toast(e.message,'err'); }
 }
 
-// â”€â”€ INIT â”€â”€ validate stored token with server before bypassing login
+// ── INIT ── validate stored token with server before bypassing login
 async function initApp(){
   if(!TOKEN){
-    // No token at all â€” show login
+    // No token at all — show login
     document.getElementById('login-page').classList.remove('hidden');
     document.getElementById('admin-app').classList.add('hidden');
     return;
@@ -831,19 +831,19 @@ async function initApp(){
     // Verify the token is still valid by hitting a protected endpoint
     const r = await fetch(API_BASE_URL + '/api/posts/admin/all?limit=1&offset=0', {headers: H()});
     if(r.status === 401 || r.status === 403){
-      // Token expired or invalid â€” force re-login
+      // Token expired or invalid — force re-login
       localStorage.removeItem('sx_token');
       TOKEN = null;
       document.getElementById('login-page').classList.remove('hidden');
       document.getElementById('admin-app').classList.add('hidden');
       return;
     }
-    // Token is valid â€” proceed to dashboard
+    // Token is valid — proceed to dashboard
     document.getElementById('login-page').classList.add('hidden');
     document.getElementById('admin-app').classList.remove('hidden');
     go('dashboard');
   } catch(e){
-    // Network error â€” still allow if token exists (offline resilience)
+    // Network error — still allow if token exists (offline resilience)
     document.getElementById('login-page').classList.add('hidden');
     document.getElementById('admin-app').classList.remove('hidden');
     go('dashboard');

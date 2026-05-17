@@ -4,7 +4,7 @@
 <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="page-title">Search â€” Scrollix</title>
+<title id="page-title">Search — Scrollix</title>
 <meta name="robots" content="noindex, follow">
 <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -82,7 +82,7 @@
 <footer>
   <div class="footer-logo">Scroll<span>ix</span></div>
   <div><a href="/">Home</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/contact.html">Contact</a></div>
-  <p style="margin-top:.75rem">Â© 2026 Scrollix. All rights reserved.</p>
+  <p style="margin-top:.75rem">© 2026 Scrollix. All rights reserved.</p>
 </footer>
 
 <script>
@@ -98,12 +98,12 @@ function cardHTML(p){return `<div class="card" onclick="window.location='/blog/$
     <span class="card-tag">${p.category_name||'General'}</span>
     <h3 class="card-title">${p.title}</h3>
     <p class="card-excerpt">${p.excerpt||''}</p>
-    <div class="card-meta"><span>${timeAgo(p.created_at)}</span><span class="card-read">Read â†’</span></div>
+    <div class="card-meta"><span>${timeAgo(p.created_at)}</span><span class="card-read">Read →</span></div>
   </div></div>`;}
 
 async function doSearch(append=false){
   if(!query) return;
-  document.getElementById('page-title').textContent = `"${query}" â€” Scrollix Search`;
+  document.getElementById('page-title').textContent = `"${query}" — Scrollix Search`;
   document.getElementById('search-input').value = query;
   try{
     const res = await fetch(API_BASE_URL + `/api/posts?search=${encodeURIComponent(query)}&limit=${limit}&offset=${offset}`);
@@ -115,7 +115,7 @@ async function doSearch(append=false){
       grid.innerHTML=`<div style="grid-column:1/-1" class="empty-state">
         <h3>Koi results nahi mila</h3>
         <p>"${query}" ke liye koi article nahi mila. Doosra keyword try karo.</p>
-        <a href="/" style="color:var(--accent)">â† Back to Home</a>
+        <a href="/" style="color:var(--accent)">← Back to Home</a>
       </div>`;
       document.getElementById('results-header').innerHTML='';
     } else {

@@ -4,7 +4,7 @@
 <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="page-title">Loading... â€” Scrollix</title>
+<title id="page-title">Loading... — Scrollix</title>
 <meta name="description" id="meta-desc" content="">
 <meta property="og:title" id="og-title" content="">
 <meta property="og:description" id="og-desc" content="">
@@ -159,7 +159,7 @@
 
 <div class="wrap">
   <!-- AD SLOT TOP -->
-  <!-- AD SLOT: Post Top Banner 728x90 â€” paste AdSense code here -->
+  <!-- AD SLOT: Post Top Banner 728x90 — paste AdSense code here -->
   <div class="ad-slot" style="height:90px;"></div>
 
   <div class="layout">
@@ -185,7 +185,7 @@
         </div>
 
         <!-- AD SLOT MID -->
-        <!-- AD SLOT: Post Mid 970x90 â€” paste AdSense code here -->
+        <!-- AD SLOT: Post Mid 970x90 — paste AdSense code here -->
         <div class="ad-slot" style="height:90px;"></div>
 
         <!-- ARTICLE BODY -->
@@ -197,13 +197,13 @@
 
         <!-- AFFILIATE PRODUCTS -->
         <div class="affiliate-section" id="aff-section" style="display:none">
-          <div class="aff-title">Buy Links â€” Best Prices</div>
+          <div class="aff-title">Buy Links — Best Prices</div>
           <div class="aff-grid" id="aff-grid"></div>
-          <div class="affiliate-disclaimer">* Ye affiliate links hain. Agar tum in links se kharido toh humhe ek chhoti si commission milti hai â€” tumhare liye price same rehta hai. Thank you for supporting Scrollix!</div>
+          <div class="affiliate-disclaimer">* Ye affiliate links hain. Agar tum in links se kharido toh humhe ek chhoti si commission milti hai — tumhare liye price same rehta hai. Thank you for supporting Scrollix!</div>
         </div>
 
         <!-- AD SLOT AFTER AFFILIATE -->
-        <!-- AD SLOT: Post After Products â€” paste AdSense code here -->
+        <!-- AD SLOT: Post After Products — paste AdSense code here -->
         <div class="ad-slot" style="height:90px;"></div>
 
         <!-- SHARE -->
@@ -245,7 +245,7 @@
 <footer>
   <div class="foot-logo">Scroll<span>ix</span></div>
   <div><a href="/">Home</a><a href="/about.html">About</a><a href="/privacy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a></div>
-  <p style="margin-top:.75rem;color:#444">Â© 2026 Scrollix. All rights reserved.</p>
+  <p style="margin-top:.75rem;color:#444">© 2026 Scrollix. All rights reserved.</p>
 </footer>
 
 <script type="application/ld+json" id="post-schema">{}</script>
@@ -266,14 +266,14 @@ function platformClass(p){
 function affCardHTML(prod){
   const btnClass = platformClass(prod.platform);
   return `<div class="aff-card">
-    ${prod.image ? `<img src="${prod.image}" alt="${prod.name}" class="aff-img" loading="lazy">` : `<div class="aff-img-placeholder">ðŸ›ï¸</div>`}
+    ${prod.image ? `<img src="${prod.image}" alt="${prod.name}" class="aff-img" loading="lazy">` : `<div class="aff-img-placeholder">🛍️</div>`}
     <div class="aff-info">
       <div class="aff-name">${prod.name}</div>
       ${prod.price ? `<div class="aff-price">${prod.price}</div>` : ''}
       <div class="aff-platform">${prod.platform||'Online Store'}</div>
       ${prod.note ? `<div class="aff-note">${prod.note}</div>` : ''}
     </div>
-    <a href="${prod.link}" target="_blank" rel="nofollow noopener" class="btn-buy ${btnClass}">Buy Now â†’</a>
+    <a href="${prod.link}" target="_blank" rel="nofollow noopener" class="btn-buy ${btnClass}">Buy Now →</a>
   </div>`;
 }
 
@@ -284,7 +284,7 @@ async function loadPost(){
     const {post,related} = await res.json();
 
     // Meta
-    document.getElementById('page-title').textContent = (post.seo_title||post.title)+' â€” Scrollix';
+    document.getElementById('page-title').textContent = (post.seo_title||post.title)+' — Scrollix';
     document.getElementById('meta-desc').content = post.seo_description||post.excerpt||'';
     document.getElementById('og-title').content = post.title;
     document.getElementById('og-desc').content = post.excerpt||'';
@@ -363,13 +363,13 @@ async function loadPost(){
         <div class="pop-item" onclick="window.location='/blog/${p.slug}'">
           <span class="pop-num">${String(i+1).padStart(2,'0')}</span>
           <div><div class="pop-title">${p.title}</div>
-          <div class="pop-meta">${p.views||0} views Â· ${p.category_name||''}</div></div>
+          <div class="pop-meta">${p.views||0} views · ${p.category_name||''}</div></div>
         </div>`).join('');
     }
   }catch(e){}
 }
 
-function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent(document.title+' â€” '+window.location.href));}
+function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent(document.title+' — '+window.location.href));}
 function shareTW(){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(window.location.href));}
 function copyLink(){navigator.clipboard.writeText(window.location.href).then(()=>{ const btn=document.querySelector('.share-copy'); btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy Link',2000); });}
 
